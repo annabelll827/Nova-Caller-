@@ -12,232 +12,143 @@
             font-family: Tahoma, sans-serif;
         }
         body {
-            background: #1a1a24 url('https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?q=80&w=1000&auto=format&fit=crop') no-repeat center center fixed;
-            background-size: cover;
+            background: #121218;
             color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding: 10px;
-            position: relative;
-        }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 15, 25, 0.88);
-            z-index: -1;
         }
         header {
             width: 100%;
-            max-width: 950px;
+            max-width: 450px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .user-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .currency-box {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 5px 12px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 10px;
             border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 13px;
+            gap: 4px;
+            font-size: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .profile-section {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             font-weight: bold;
             color: #ffcc00;
+            font-size: 13px;
         }
         .profile-avatar {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #d32f2f;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 2px solid #ffcc00;
-        }
-        
-        #main-menu {
-            width: 100%;
-            max-width: 950px;
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        .game-card {
-            flex: 1;
-            min-width: 160px;
-            max-width: 180px;
-            height: 290px;
-            border-radius: 16px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            transition: transform 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .game-card:hover { transform: translateY(-5px); }
-        .card-green { background: linear-gradient(135deg, #1b4d3e, #0f2d24); border-color: #2e7d32; }
-        .card-gold { background: linear-gradient(135deg, #5c4b1e, #33280e); border-color: #d4af37; }
-        .card-blue { background: linear-gradient(135deg, #1e3d5c, #0e2233); border-color: #2196f3; }
-        .card-darkblue { background: linear-gradient(135deg, #2c3e50, #1a252f); border-color: #34495e; }
-        .card-red { background: linear-gradient(135deg, #5c1e1e, #330e0e); border-color: #f44336; }
-
-        .card-title { font-size: 15px; font-weight: bold; margin-bottom: 5px; }
-        .card-desc { font-size: 10px; color: #ddd; margin-bottom: 10px; line-height: 1.4; }
-        .card-btn {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #fff;
-        }
-        .card-icon { font-size: 32px; margin: 10px 0; }
-
-        /* Bottom Nav Bar */
-        .bottom-nav-bar {
-            width: 100%;
-            max-width: 950px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 35px;
-            padding: 8px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.15);
-        }
-        .nav-left-icons, .nav-right-icons {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .nav-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(60, 60, 75, 0.9);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .nav-btn:hover { background: rgba(90, 90, 110, 1); }
-        .center-tasks {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .task-capsule {
-            background: rgba(35, 35, 50, 0.95);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .friends-btn {
-            background: linear-gradient(135deg, #d4af37, #aa820a);
-            color: #000;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
 
         /* Game Board Area */
         #game-area {
-            display: none;
+            display: flex;
             width: 100%;
-            max-width: 780px;
+            max-width: 450px;
             flex-direction: column;
             gap: 10px;
-            background: rgba(0,0,0,0.85);
-            padding: 15px;
-            border-radius: 12px;
+            background: rgba(20, 20, 28, 0.95);
+            padding: 12px;
+            border-radius: 16px;
             border: 1px solid rgba(255,255,255,0.1);
         }
         .top-game-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
         }
         .back-menu-btn {
-            background: #555;
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
+            padding: 4px 10px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 11px;
         }
         
+        .bot-section {
+            background: rgba(0,0,0,0.3);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .bot-label {
+            font-size: 11px;
+            margin-bottom: 6px;
+            color: #aaa;
+        }
+        .bot-tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 3px;
+            justify-content: center;
+        }
+        .bot-tile {
+            height: 32px;
+            background-color: #333;
+            color: #777;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        /* ناوەڕاست: فڕێدراو لە چەپ، گردۆکە لە ناوەڕاست، جووکر لە ڕاست */
         #center-table {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
-            gap: 30px;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
             border-radius: 10px;
-            min-height: 110px;
         }
         .table-section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
         .table-label {
-            font-size: 11px;
-            color: #ccc;
+            font-size: 10px;
+            color: #aaa;
         }
 
-        .tiles-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            justify-content: center;
-            min-height: 48px;
-        }
         .tile {
-            width: 32px;
-            height: 46px;
+            width: 34px;
+            height: 48px;
             background-color: #f4f4f4;
             color: #333;
             border-radius: 4px;
@@ -246,27 +157,41 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.4);
             user-select: none;
             transition: transform 0.1s;
         }
-        .tile:hover { transform: translateY(-3px); }
-        .tile.selected { border: 2px solid #ffcc00; transform: translateY(-5px); }
+        .tile:hover { transform: translateY(-2px); }
+        .tile.selected { border: 2px solid #ffcc00; transform: translateY(-4px); }
+        
+        /* رەنگەکان ڕێک وەک وێنەکە */
         .tile.red { color: #d9534f; }
         .tile.blue { color: #0275d8; }
-        .tile.black { color: #292b2c; }
+        .tile.black { color: #222; }
         .tile.yellow { color: #f0ad4e; }
-        .tile.joker { color: #8a2be2; font-size: 10px; border: 1px dashed #8a2be2; }
 
-        /* Player Board (دو نهۆمی وەک ڤیدیۆکە) */
-        .player-board {
-            background: linear-gradient(135deg, #4b5320, #2e3512);
-            border: 3px solid #1e240a;
+        .deck-draw-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 14px;
             border-radius: 8px;
-            padding: 10px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            box-shadow: 0 2px 6px rgba(0,123,255,0.4);
+        }
+        .deck-draw-btn:active { transform: scale(0.95); }
+
+        /* تەختەی دوونهۆمی یاریزان (ڕەنگ و شێوازی سەوزی وێنەکە) */
+        .player-board {
+            background: linear-gradient(135deg, #4b5320, #343c13);
+            border: 2px solid #23280c;
+            border-radius: 10px;
+            padding: 8px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.7);
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -274,45 +199,26 @@
         .board-row {
             display: flex;
             gap: 4px;
-            min-height: 48px;
-            background: rgba(0,0,0,0.2);
+            min-height: 52px;
+            background: rgba(0,0,0,0.25);
             padding: 4px;
-            border-radius: 4px;
+            border-radius: 6px;
             justify-content: center;
         }
 
-        .deck-draw-btn {
-            background: #2196f3;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .action-btns {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 5px;
-        }
         .action-btn {
             background: #ffcc00;
             color: #000;
             border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
+            padding: 8px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 12px;
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(255,204,0,0.3);
         }
-        #message {
-            font-size: 13px;
-            color: #ffeb3b;
-            font-weight: bold;
-            text-align: center;
-        }
+        .action-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -329,88 +235,23 @@
         </div>
     </header>
 
-    <div id="main-menu">
-        <div class="game-card card-green" onclick="alert('دۆمینە بە زوویی دەست پێدەکات!')">
-            <div>
-                <div class="card-title">دۆمینە</div>
-                <div class="card-desc">٢٨ پۆل، دوو تیم، یەک پالەوان.</div>
-            </div>
-            <div class="card-icon">🁫</div>
-            <button class="card-btn" style="background-color: #2e7d32;">یاریکردن</button>
-        </div>
-
-        <div class="game-card card-gold" onclick="alert('پاڵەوانێتیەکان بە زوویی بەردەست دەبن!')">
-            <div>
-                <div class="card-title">پاڵەوانێتیەکان</div>
-                <div class="card-desc">رکابەری بکە بۆ خەڵاتی گەورە و خۆت بسەلمێنە.</div>
-            </div>
-            <div class="card-icon">🏆</div>
-            <button class="card-btn" style="background-color: #b8860b;">پاڵەوانێتیەکان</button>
-        </div>
-
-        <div class="game-card card-blue" onclick="alert('ڕیزبەندیەکان')">
-            <div>
-                <div class="card-title">ڕیزبەندی (پلەکان)</div>
-                <div class="card-desc">پەیوەندی بە ڕیزبەندی جیهانییەوە بکە.</div>
-            </div>
-            <div class="card-icon">🛡️</div>
-            <button class="card-btn" style="background-color: #1976d2;">پلەکان</button>
-        </div>
-
-        <div class="game-card card-darkblue" onclick="alert('ڕیزبەندی گشتی')">
-            <div>
-                <div class="card-title">ڕیزبەندی</div>
-                <div class="card-desc">پارییەکی پێشبڕکێ بۆ پلەی جیهانی.</div>
-            </div>
-            <div class="card-icon">🎖️</div>
-            <button class="card-btn" style="background-color: #34495e;">یاری بکە</button>
-        </div>
-
-        <div class="game-card card-red" onclick="startOkeyGame()">
-            <div>
-                <div class="card-title">یاری خێرا</div>
-                <div class="card-desc">یاسای کلاسیک، پاریزی خێرا و مەرجی ٨١ خاڵ.</div>
-            </div>
-            <div class="card-icon">▶️</div>
-            <button class="card-btn" style="background-color: #d32f2f;">یاریکردن</button>
-        </div>
-    </div>
-
-    <div class="bottom-nav-bar" id="bottom-bar">
-        <div class="nav-left-icons">
-            <button class="nav-btn" onclick="alert('ڕێکخستنەکان')">⚙️</button>
-            <button class="nav-btn" onclick="alert('ڕێنمایی و زانیاری')">💡</button>
-            <button class="nav-btn" onclick="alert('مۆسیقا و دەنگ')">📻</button>
-        </div>
-        
-        <div class="center-tasks">
-            <div class="task-capsule" onclick="alert('ئەرکە ڕۆژانەکان')">📋</div>
-            <div class="task-capsule" onclick="alert('پێشبڕکێکان')">🎯</div>
-            <div class="task-capsule" onclick="alert('سوڕانەوەی خەڵات')">🎡</div>
-        </div>
-
-        <div class="nav-right-icons">
-            <button class="nav-btn" onclick="alert('یارمەتی')">❓</button>
-            <button class="friends-btn" onclick="alert('هاوڕێکان')">➕ هاوڕێکان</button>
-        </div>
-    </div>
-
     <div id="game-area">
         <div class="top-game-bar">
-            <button class="back-menu-btn" onclick="backToMenu()">گەڕانەوە</button>
-            <div id="message">یاری Konkan دەستی پێکرد!</div>
-            <div>خاڵی تۆ: <span id="player-points" style="color: #ffcc00; font-weight: bold;">81</span> | بۆت: <span id="bot-points" style="color: #ff5252; font-weight: bold;">81</span></div>
+            <button class="back-menu-btn" onclick="alert('گەڕانەوە بۆ مینیۆ')">گەڕانەوە</button>
+            <div style="font-weight: bold; color: #ffcc00; text-align: center;">یاسای Konkan: ١٥ پارچەت لەسەر تەختەیە، سەرەتا پارچەیەک فڕێ بدە!</div>
+            <div>خاڵی تۆ: <span style="color: #ffcc00;">81</span> | بۆت: <span style="color: #ff5252;">81</span></div>
         </div>
         
-        <div class="section" style="background: rgba(0,0,0,0.3); padding: 6px; border-radius: 6px;">
-            <div style="font-size: 11px; margin-bottom: 2px; color: #ccc;">دەستەی بۆت - <span id="bot-count">14</span> پارچە</div>
-            <div class="tiles-container" id="bot-tiles"></div>
+        <div class="bot-section">
+            <div class="bot-label">دەستەی بۆت - <span id="bot-count">14</span> پارچە</div>
+            <div class="bot-tiles-grid" id="bot-tiles"></div>
         </div>
 
+        <!-- ناوەڕاست: [فڕێدراو] لە چەپ | [گردۆکە] لە ناوەڕاست | [جووکر ڕوو] لە ڕاست -->
         <div id="center-table">
             <div class="table-section">
-                <span class="table-label">جووکر (ڕوو)</span>
-                <div id="indicator-container"></div>
+                <span class="table-label">فڕێدراو</span>
+                <div id="discard-pile"></div>
             </div>
 
             <div class="table-section">
@@ -419,100 +260,51 @@
             </div>
 
             <div class="table-section">
-                <span class="table-label">فڕێدراو</span>
-                <div class="tiles-container" id="discard-pile" style="min-height: 46px; min-width: 32px;"></div>
+                <span class="table-label">جووکر (ڕوو)</span>
+                <div id="indicator-container"></div>
             </div>
         </div>
 
+        <!-- تەختەی دوونهۆمی یاریزان -->
         <div class="player-board">
-            <div style="font-size: 11px; color: #ffcc00; text-align: center;">دەستەی تۆ (ڕیزکردنی پارچەکان لەسەر تەختە)</div>
+            <div style="font-size: 10px; color: #ffcc00; text-align: center;">دەستەی تۆ (ڕیزکردنی پارچەکان لەسەر تەختە)</div>
             <div class="board-row" id="row-1"></div>
             <div class="board-row" id="row-2"></div>
-            <div class="action-btns">
-                <button class="action-btn" onclick="discardSelected()">فڕێدانی پارچەی هەڵبژاردراو</button>
-            </div>
+            <button class="action-btn" onclick="discardSelected()">فڕێدانی پارچەی هەڵبژاردراو</button>
         </div>
     </div>
 
     <script>
         const colors = ['red', 'blue', 'black', 'yellow'];
         let deck = [];
-        let row1Tiles = [];
-        let row2Tiles = [];
-        let botTiles = [];
-        let discardPile = [];
-        let gameActive = true;
-        let indicatorTile = null;
-        let playerPoints = 81;
-        let botPoints = 81;
+        let row1Tiles = [
+            { color: 'red', value: 8 }, { color: 'blue', value: 4 }, { color: 'yellow', value: 2 },
+            { color: 'black', value: 11 }, { color: 'red', value: 12 }, { color: 'blue', value: 4 },
+            { color: 'yellow', value: 11 }, { color: 'blue', value: 3 }
+        ];
+        let row2Tiles = [
+            { color: 'black', value: 11 }, { color: 'red', value: 1 }, { color: 'yellow', value: 3 },
+            { color: 'black', value: 8 }, { color: 'blue', value: 6 }, { color: 'yellow', value: 2 },
+            { color: 'black', value: 12 }
+        ];
+        let botTiles = Array(14).fill(0);
+        let discardPile = [{ color: 'blue', value: 8 }];
+        let indicatorTile = { color: 'red', value: 5 };
         let selectedTile = null;
         let selectedRow = null;
         let selectedIndex = null;
 
-        function startOkeyGame() {
-            document.getElementById('main-menu').style.display = 'none';
-            document.getElementById('bottom-bar').style.display = 'none';
-            document.getElementById('game-area').style.display = 'flex';
-            initGame();
-        }
+        function initUI() {
+            // نیشاندانی جووکر
+            const indCont = document.getElementById('indicator-container');
+            indCont.innerHTML = '';
+            indCont.appendChild(createTileElement(indicatorTile));
 
-        function backToMenu() {
-            document.getElementById('main-menu').style.display = 'flex';
-            document.getElementById('bottom-bar').style.display = 'flex';
-            document.getElementById('game-area').style.display = 'none';
-        }
-
-        function createDeck() {
-            let newDeck = [];
-            let id = 1;
-            for (let set = 0; set < 2; set++) {
-                colors.forEach(color => {
-                    for (let i = 1; i <= 13; i++) {
-                        newDeck.push({ id: id++, color: color, value: i, type: 'normal' });
-                    }
-                });
-            }
-            newDeck.push({ id: id++, color: 'joker', value: 'J', type: 'joker' });
-            newDeck.push({ id: id++, color: 'joker', value: 'J', type: 'joker' });
-            return newDeck.sort(() => Math.random() - 0.5);
-        }
-
-        function initGame() {
-            deck = createDeck();
-            row1Tiles = [];
-            row2Tiles = [];
-            botTiles = [];
-            discardPile = [];
-            gameActive = true;
-            selectedTile = null;
-
-            indicatorTile = deck.pop();
-            
-            const indicatorCont = document.getElementById('indicator-container');
-            indicatorCont.innerHTML = '';
-            indicatorCont.appendChild(createTileElement(indicatorTile));
-
-            // دابەشکردنی ١٥ پارچە بەسەر دوو نهۆمی تەختەکەدا
-            let tempAll = [];
-            for (let i = 0; i < 15; i++) tempAll.push(deck.pop());
-            row1Tiles = tempAll.slice(0, 8);
-            row2Tiles = tempAll.slice(8, 15);
-
-            for (let i = 0; i < 14; i++) botTiles.push(deck.pop());
-            discardPile.push(deck.pop());
-
-            updateScoreUI();
-            setMessage("یاسای Konkan: ١٥ پارچەت لەسەر تەختەیە، سەرەتا پارچەیەک فڕێ بدە!");
             render();
         }
 
-        function updateScoreUI() {
-            document.getElementById('player-points').innerText = playerPoints;
-            document.getElementById('bot-points').innerText = botPoints;
-        }
-
         function render() {
-            // نیشاندانی ڕیزی یەکەم
+            // ڕیزی یەکەم
             const r1 = document.getElementById('row-1');
             r1.innerHTML = '';
             row1Tiles.forEach((tile, idx) => {
@@ -522,7 +314,7 @@
                 r1.appendChild(el);
             });
 
-            // نیشاندانی ڕیزی دووەم
+            // ڕیزی دووەم
             const r2 = document.getElementById('row-2');
             r2.innerHTML = '';
             row2Tiles.forEach((tile, idx) => {
@@ -537,14 +329,10 @@
             botContainer.innerHTML = '';
             botTiles.forEach(() => {
                 const el = document.createElement('div');
-                el.className = 'tile';
-                el.style.backgroundColor = '#333';
-                el.style.color = '#777';
+                el.className = 'bot-tile';
                 el.innerText = '?';
                 botContainer.appendChild(el);
             });
-            document.getElementById('bot-count').innerText = botTiles.length;
-            updateScoreUI();
 
             // فڕێدراو
             const discardContainer = document.getElementById('discard-pile');
@@ -558,11 +346,7 @@
         function createTileElement(tile) {
             const div = document.createElement('div');
             div.className = `tile ${tile.color}`;
-            if (tile.type === 'joker') {
-                div.innerHTML = `<span class="joker">جووکر</span>`;
-            } else {
-                div.innerHTML = `<span>${tile.value}</span>`;
-            }
+            div.innerHTML = `<span>${tile.value}</span>`;
             return div;
         }
 
@@ -571,87 +355,43 @@
             selectedIndex = idx;
             selectedTile = (row === 1) ? row1Tiles[idx] : row2Tiles[idx];
             render();
-            setMessage("پارچە هەڵبژێردرا. کلیک لەسەر 'فڕێدانی پارچە' بکە ئەگەر دەتەوێت فڕێی بدەیت.");
         }
 
         function drawTile() {
-            if (!gameActive) return;
-            if (deck.length === 0) {
-                setMessage("دەستەی پارچەکان تەواو بوو!");
+            let total = row1Tiles.length + row2Tiles.length;
+            if (total > 14) {
+                alert("تۆ پارچەی پێویستت هەیە، سەرەتا پارچەیەک فڕێ بدە!");
                 return;
             }
-            let totalTiles = row1Tiles.length + row2Tiles.length;
-            if (totalTiles > 14) {
-                setMessage("تۆ پارچەی پێویستت هەیە، سەرەتا یەکێک فڕێ بدە!");
-                return;
-            }
-            row1Tiles.push(deck.pop());
+            row1Tiles.push({ color: colors[Math.floor(Math.random()*colors.length)], value: Math.floor(Math.random()*13)+1 });
             render();
-            setMessage("پارچەت هەڵگرت بۆ ڕیزی یەکەم.");
         }
 
         function discardSelected() {
-            if (!gameActive) return;
             if (!selectedTile) {
-                setMessage("تکایە سەرەتا پارچەیەک لەسەر تەختە هەڵبژێرە!");
+                alert("تکایە سەرەتا پارچەیەک لەسەر تەختە هەڵبژێرە!");
                 return;
             }
-            let totalTiles = row1Tiles.length + row2Tiles.length;
-            if (totalTiles <= 14) {
-                setMessage("سەرەتا دەبێت پارچەیەک لە گردۆکە هەڵگریت!");
+            let total = row1Tiles.length + row2Tiles.length;
+            if (total <= 14) {
+                alert("سەرەتا دەبێت پارچەیەک هەڵگریت!");
                 return;
             }
 
-            let removed;
             if (selectedRow === 1) {
-                removed = row1Tiles.splice(selectedIndex, 1)[0];
+                row1Tiles.splice(selectedIndex, 1);
             } else {
-                removed = row2Tiles.splice(selectedIndex, 1)[0];
+                row2Tiles.splice(selectedIndex, 1);
             }
 
-            discardPile.push(removed);
+            discardPile.push(selectedTile);
             selectedTile = null;
             selectedRow = null;
             selectedIndex = null;
-
-            playerPoints -= 5;
-            if (playerPoints <= 0) {
-                playerPoints = 0;
-                alert("پیرۆزە! یارییەکەت بردەوە!");
-                playerPoints = 81;
-                botPoints = 81;
-            }
-
             render();
-            setMessage("پارچە فڕێدرا (-5 خاڵ). نۆرەی بۆتە...");
-
-            gameActive = false;
-            setTimeout(botTurn, 1000);
         }
 
-        function botTurn() {
-            if (deck.length > 0) {
-                botTiles.push(deck.pop());
-                const randomIdx = Math.floor(Math.random() * botTiles.length);
-                const botRemoved = botTiles.splice(randomIdx, 1)[0];
-                discardPile.push(botRemoved);
-                
-                botPoints -= 3;
-                if (botPoints <= 0) {
-                    botPoints = 0;
-                    alert("بۆت (کۆمپیوتەر) یارییەکەی بردەوە!");
-                    playerPoints = 81;
-                    botPoints = 81;
-                }
-            }
-            gameActive = true;
-            render();
-            setMessage("نۆرەی تۆیە! پارچەیەک هەڵگرە یان فڕێ بدە.");
-        }
-
-        function setMessage(text) {
-            document.getElementById('message').innerText = text;
-        }
+        window.onload = initUI;
     </script>
 </body>
 </html>
