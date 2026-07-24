@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>یاری ئۆکەی - Okey Game</title>
+    <title>یاری ئۆکەی کوردی - ٨١ خاڵ</title>
     <style>
         * {
             box-sizing: border-box;
@@ -26,10 +26,9 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 15, 25, 0.85);
+            background: rgba(15, 15, 25, 0.88);
             z-index: -1;
         }
-        /* Top Bar */
         header {
             width: 100%;
             max-width: 900px;
@@ -45,16 +44,17 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .currency-box {
             background: rgba(0, 0, 0, 0.6);
-            padding: 5px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            gap: 5px;
+            font-size: 13px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .profile-name {
@@ -62,7 +62,6 @@
             color: #ffcc00;
         }
         
-        /* Main Menu Cards View */
         #main-menu {
             width: 100%;
             max-width: 900px;
@@ -86,13 +85,10 @@
             text-align: center;
             cursor: pointer;
             box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.7);
-        }
+        .game-card:hover { transform: translateY(-5px); }
         .card-green { background: linear-gradient(135deg, #1b4d3e, #0f2d24); border-color: #2e7d32; }
         .card-gold { background: linear-gradient(135deg, #5c4b1e, #33280e); border-color: #d4af37; }
         .card-blue { background: linear-gradient(135deg, #1e3d5c, #0e2233); border-color: #2196f3; }
@@ -108,25 +104,17 @@
             font-weight: bold;
             cursor: pointer;
             color: #fff;
+            background-color: #d32f2f;
         }
-        .card-green .card-btn { background-color: #2e7d32; }
-        .card-gold .card-btn { background-color: #b8860b; }
-        .card-blue .card-btn { background-color: #1976d2; }
-        .card-red .card-btn { background-color: #d32f2f; }
+        .card-icon { font-size: 35px; margin: 20px 0; }
 
-        .card-icon {
-            font-size: 35px;
-            margin: 20px 0;
-        }
-
-        /* Game Board Area (Hidden by default until game starts) */
         #game-area {
             display: none;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             flex-direction: column;
             gap: 15px;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             padding: 15px;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -145,8 +133,8 @@
             min-height: 50px;
         }
         .tile {
-            width: 32px;
-            height: 45px;
+            width: 34px;
+            height: 48px;
             background-color: #f4f4f4;
             color: #333;
             border-radius: 4px;
@@ -159,12 +147,14 @@
             cursor: pointer;
             box-shadow: 0 2px 4px rgba(0,0,0,0.4);
             user-select: none;
+            transition: transform 0.1s;
         }
+        .tile:hover { transform: translateY(-3px); }
         .tile.red { color: #d9534f; }
         .tile.blue { color: #0275d8; }
         .tile.black { color: #292b2c; }
         .tile.yellow { color: #f0ad4e; }
-        .tile.joker { color: #8a2be2; font-size: 10px; }
+        .tile.joker { color: #8a2be2; font-size: 10px; border: 1px dashed #8a2be2; }
 
         #center-area {
             display: flex;
@@ -184,7 +174,7 @@
             font-weight: bold;
         }
         #message {
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 14px;
             color: #ffeb3b;
             font-weight: bold;
@@ -197,14 +187,29 @@
             padding: 6px 12px;
             border-radius: 5px;
             cursor: pointer;
-            margin-bottom: 10px;
             align-self: flex-start;
+        }
+        .rule-badge {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            text-align: center;
+        }
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.5);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
-    <!-- بەشی سەرەوە (پارس و زانیاری بەکارهێنەر) -->
     <header>
         <div class="user-info">
             <div class="currency-box">🟡 <span id="coins">97,000</span></div>
@@ -215,48 +220,58 @@
         </div>
     </header>
 
-    <!-- مینیوی سەرەکی (کارتەکان) -->
+    <!-- مینیوی سەرەکی -->
     <div id="main-menu">
-        <div class="game-card card-green" onclick="startGame()">
+        <div class="game-card card-green" onclick="alert('ئەم بەشە بە زوویی بەردەست دەبێت!')">
             <div>
                 <div class="card-title">دۆمینە</div>
                 <div class="card-desc">٢٨ پۆل، دوو تیم، یەک پالەوان.</div>
             </div>
             <div class="card-icon">🁫</div>
-            <button class="card-btn">یاریکردن</button>
+            <button class="card-btn" style="background-color: #2e7d32;">یاریکردن</button>
         </div>
 
-        <div class="game-card card-gold" onclick="startGame()">
+        <div class="game-card card-gold" onclick="alert('ئەم بەشە بە زوویی بەردەست دەبێت!')">
             <div>
                 <div class="card-title">پالەوانێتیەکان</div>
-                <div class="card-desc">رکابەری بکە بۆ خەڵاتی گەورە و خۆت بسەلمێنە.</div>
+                <div class="card-desc">رکابەری بکە بۆ خەڵاتی گەورە.</div>
             </div>
             <div class="card-icon">🏆</div>
-            <button class="card-btn">پالەوانێتیەکان</button>
+            <button class="card-btn" style="background-color: #b8860b;">پالەوانێتیەکان</button>
         </div>
 
-        <div class="game-card card-blue" onclick="startGame()">
+        <div class="game-card card-blue" onclick="alert('ئەم بەشە بە زوویی بەردەست دەبێت!')">
             <div>
-                <div class="card-title">ڕیزبەندی (پلەکان)</div>
+                <div class="card-title">ڕیزبەندی</div>
                 <div class="card-desc">پارییەکی پێشبڕکێ بۆ پلەی جیهانی.</div>
             </div>
             <div class="card-icon">🛡️</div>
-            <button class="card-btn">پلەکان</button>
+            <button class="card-btn" style="background-color: #1976d2;">پلەکان</button>
         </div>
 
-        <div class="game-card card-red" onclick="startGame()">
+        <!-- یاری خێرا (ئۆکەی کوردی - سیستمی دەبەزاندنی ٨١ خاڵ) -->
+        <div class="game-card card-red" onclick="startOkeyGame()">
             <div>
                 <div class="card-title">یاری خێرا</div>
-                <div class="card-desc">پاسای کلاسیک، یاریزی خێرا.</div>
+                <div class="card-desc">ئۆکەی کوردی: یاسای دەبەزاندنی ٨١ خاڵ.</div>
             </div>
             <div class="card-icon">▶️</div>
             <button class="card-btn">یاریکردن</button>
         </div>
     </div>
 
-    <!-- یاریگای ئۆکەی (لە کاتی دەستپێکردنی یاری دەرەکەوێت) -->
+    <!-- یاریگای ئۆکەی کوردی -->
     <div id="game-area">
-        <button class="back-menu-btn" onclick="backToMenu()">گەڕانەوە بۆ مینیو</button>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button class="back-menu-btn" onclick="backToMenu()">گەڕانەوە</button>
+            <div class="rule-badge" id="indicator-display">جووکر: دیاریکردن...</div>
+        </div>
+
+        <!-- بەشی پیشاندانی خاڵەکان (یاسای ٨١) -->
+        <div class="score-board">
+            <div>خاڵی تۆ: <span id="player-points" style="color: #ffcc00; font-weight: bold; font-size: 15px;">81</span></div>
+            <div>خاڵی بۆت: <span id="bot-points" style="color: #ff5252; font-weight: bold; font-size: 15px;">81</span></div>
+        </div>
         
         <div class="section">
             <h3 style="font-size: 13px; margin-bottom: 5px;">دەستەی بۆت (کۆمپیوتەر) - <span id="bot-count">14</span> پارچە</h3>
@@ -269,7 +284,7 @@
             </div>
             <div>
                 <p style="font-size: 11px; margin-bottom: 3px; color: #ccc;">کۆتا پارچەی فڕێدراو</p>
-                <div class="tiles-container" id="discard-pile" style="min-height: 45px; min-width: 32px;"></div>
+                <div class="tiles-container" id="discard-pile" style="min-height: 48px; min-width: 34px;"></div>
             </div>
         </div>
 
@@ -278,7 +293,7 @@
             <div class="tiles-container" id="player-tiles"></div>
         </div>
 
-        <div id="message">فەرموو، دەست پێکردا!</div>
+        <div id="message">فەرموو، یاری دەستی پێکرد! (دەبەزاندن لە ٨١ خاڵەوە)</div>
     </div>
 
     <script>
@@ -288,8 +303,13 @@
         let botTiles = [];
         let discardPile = [];
         let gameActive = true;
+        let indicatorTile = null;
+        
+        // دەستپێکردنی خاڵەکان لە ٨١ بەپێی یاسای کوردی
+        let playerPoints = 81;
+        let botPoints = 81;
 
-        function startGame() {
+        function startOkeyGame() {
             document.getElementById('main-menu').style.display = 'none';
             document.getElementById('game-area').style.display = 'flex';
             initGame();
@@ -322,12 +342,21 @@
             discardPile = [];
             gameActive = true;
 
+            indicatorTile = deck.pop();
+            document.getElementById('indicator-display').innerText = `ڕوو (جووکر): ${indicatorTile.color} - ${indicatorTile.value}`;
+
             for (let i = 0; i < 15; i++) playerTiles.push(deck.pop());
             for (let i = 0; i < 14; i++) botTiles.push(deck.pop());
             discardPile.push(deck.pop());
 
-            setMessage("یاری دەستی پێکرد! نۆرەی تۆیە.");
+            updateScoreUI();
+            setMessage("یاسای کوردی (٨١): تۆ 15 پارچەت هەیە، سەرەتا پارچەیەک فڕێ بدە!");
             render();
+        }
+
+        function updateScoreUI() {
+            document.getElementById('player-points').innerText = playerPoints;
+            document.getElementById('bot-points').innerText = botPoints;
         }
 
         function render() {
@@ -350,6 +379,7 @@
                 botContainer.appendChild(el);
             });
             document.getElementById('bot-count').innerText = botTiles.length;
+            updateScoreUI();
 
             const discardContainer = document.getElementById('discard-pile');
             discardContainer.innerHTML = '';
@@ -377,24 +407,34 @@
                 return;
             }
             if (playerTiles.length > 14) {
-                setMessage("پێویستە یەکێک فڕێ بدەیت!");
+                setMessage("تۆ 15 پارچەت هەیە، سەرەتا دەبێت یەکێک فڕێ بدەیت!");
                 return;
             }
             playerTiles.push(deck.pop());
             render();
-            setMessage("پارچەت هەڵگرت، ئێستا پارچەیەک فڕێ بدە.");
+            setMessage("پارچەت هەڵگرت، ئێستا پارچەیەک فڕێ بدە بۆ ئەوەی نۆرەی بۆت بێت.");
         }
 
         function playerDiscard(index) {
             if (!gameActive) return;
             if (playerTiles.length <= 14) {
-                setMessage("سەرەتا دەبێت پارچەیەک هەڵگریت!");
+                setMessage("سەرەتا دەبێت پارچەیەک لە گردۆکەکە هەڵگریت!");
                 return;
             }
             const removed = playerTiles.splice(index, 1)[0];
             discardPile.push(removed);
+            
+            // کاتێک یاریزان خولێک دەباتەوە یان فڕێدانێکی باش دەکات، خاڵەکانی دەبەزێنرێن (کەم دەبنەوە)
+            playerPoints -= 5;
+            if (playerPoints <= 0) {
+                playerPoints = 0;
+                alert("پیرۆزە! تۆ یارییەکەت بردەوە و خاڵەکانت سفربوونەوە!");
+                playerPoints = 81; // دووبارە دەستپێکردنەوە بۆ یاری نوێ
+                botPoints = 81;
+            }
+
             render();
-            setMessage("نۆرەی بۆتە...");
+            setMessage("تۆ پارچەیەکت فڕێدا (-5 خاڵ لە کۆی ٨١). نۆرەی بۆتە...");
 
             gameActive = false;
             setTimeout(botTurn, 1000);
@@ -406,10 +446,19 @@
                 const randomIdx = Math.floor(Math.random() * botTiles.length);
                 const botRemoved = botTiles.splice(randomIdx, 1)[0];
                 discardPile.push(botRemoved);
+                
+                // بۆت هەڵەیەک دەکات یان خاڵی بەسەردا دەشکێت، بۆتەکیش خاڵەکانی دەبەزێت
+                botPoints -= 3;
+                if (botPoints <= 0) {
+                    botPoints = 0;
+                    alert("بۆت (کۆمپیوتەر) یارییەکەی بردەوە!");
+                    playerPoints = 81;
+                    botPoints = 81;
+                }
             }
             gameActive = true;
             render();
-            setMessage("نۆرەی تۆیە!");
+            setMessage("نۆرەی تۆیە! پارچەیەک هەڵگرە یان فڕێ بدە.");
         }
 
         function setMessage(text) {
