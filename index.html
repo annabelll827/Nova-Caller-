@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یاری ئۆکەی - Okey Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Tahoma, sans-serif;
+        }
+        body {
+            background-color: #0b3d0b;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #ffcc00;
+        }
+        #game-info {
+            font-size: 14px;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        #game-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .section h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+        .tiles-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            min-height: 50px;
+        }
+        .tile {
+            width: 35px;
+            height: 50px;
+            background-color: #f4f4f4;
+            color: #333;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        .tile:hover {
+            transform: translateY(-3px);
+        }
+        .tile.red { color: #d9534f; }
+        .tile.blue { color: #0275d8; }
+        .tile.black { color: #292b2c; }
+        .tile.yellow { color: #f0ad4e; }
+        .tile.joker { color: #8a2be2; font-size: 12px; }
+
+        #center-area {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: rgba(0,0,0,0.4);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .deck-btn {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .deck-btn:active {
+            transform: scale(0.95);
+        }
+        #message {
+            margin-top: 10px;
+            font-size: 15px;
+            color: #ffeb3b;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        #controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .action-btn {
+            background: #0275d8;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>یاری ئۆکەی (Okey)</h1>
+        <div id="game-info">سەرقاڵی یاریکردن لەگەڵ کۆمپیوتەر</div>
+    </header>
+
+    <div id="game-container">
+        <!-- دەستەی بۆت -->
+        <div class="section">
+            <h3>دەستەی بۆت (کۆمپیوتەر) - <span id="bot-count">14</span> پارچە</h3>
+            <div class="tiles-container" id="bot-tiles">
+                <!-- پارچەکانی بۆت بە شاراوەیی دەردەکەون -->
+            </div>
+        </div>
+
+        <!-- ناوەڕاستی یاریگا (تاشە/دەستەکان) -->
+        <div id="center-area">
+            <div>
+                <p style="font-size: 12px; margin-bottom: 5px;">گردۆکەی گشتی</p>
+                <button class="deck-btn" onclick="drawTile()">هەڵگرتنی پارچە</button>
+            </div>
+            <div>
+                <p style="font-size: 12px; margin-bottom: 5px;">کۆتا پارچەی فڕێدراو</p>
+                <div class="tiles-container" id="discard-pile" style="min-height: 50px; min-width: 35px;">
+                    <span style="font-size: 11px; color: #aaa;">هیچ نییە</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- دەستەی یاریزان -->
+        <div class="section">
+            <h3>دەستەی تۆ (بۆ فڕێدان، لەسەر پارچەیەک کلیک بکە)</h3>
+            <div class="tiles-container" id="player-tiles">
+                <!-- پارچەکانی یاریزان لێرە دەردەکەون -->
+            </div>
+        </div>
+    </div>
+
+    <div id="message">فەرموو، سەرەتا پارچەیەک هەڵبژێرە یان لە گردۆکەکە ڕاکێشە.</div>
+
+    <div id="controls">
+        <button class="action-btn" onclick="initGame()">دەستپێکردنەوەی یاری</button>
+    </div>
+
+    <script>
+        const colors = ['red', 'blue', 'black', 'yellow'];
+        let deck = [];
+        let playerTiles = [];
+        let botTiles = [];
+        let discardPile = [];
+        let gameActive = true;
+
+        // دروستکردنی پارچەکانی ئۆکەی (106 پارچە: هەر ڕەنگێک دوو دانە لە 1 بۆ 13 + 2 جووکر)
+        function createDeck() {
+            let newDeck = [];
+            let id = 1;
+            // 2 دانە لە هەر ڕەنگ و ژمارەیەک
+            for (let set = 0; set < 2; set++) {
+                colors.forEach(color => {
+                    for (let i = 1; i <= 13; i++) {
+                        newDeck.push({ id: id++, color: color, value: i, type: 'normal' });
+                    }
+                });
+            }
+            // 2 دانە جووکر (Joker)
+            newDeck.push({ id: id++, color: 'joker', value: 'J', type: 'joker' });
+            newDeck.push({ id: id++, color: 'joker', value: 'J', type: 'joker' });
+
+            // تێکەڵکردنی پارچەکان (Shuffle)
+            return newDeck.sort(() => Math.random() - 0.5);
+        }
+
+        function initGame() {
+            deck = createDeck();
+            playerTiles = [];
+            botTiles = [];
+            discardPile = [];
+            gameActive = true;
+
+            // دابەشکردنی 15 پارچە بۆ یاریزان و 14 بۆ بۆت
+            for (let i = 0; i < 15; i++) playerTiles.push(deck.pop());
+            for (let i = 0; i < 14; i++) botTiles.push(deck.pop());
+
+            // دانانی یەکەم پارچە لە فڕێدراوەکان
+            discardPile.push(deck.pop());
+
+            setMessage("یاری دەستی پێکرد! سەرەتای نۆرەی تۆیە، پارچەیەک هەڵگرە یان فڕێ بدە.");
+            render();
+        }
+
+        function render() {
+            // نیشاندانی دەستەی یاریزان
+            const playerContainer = document.getElementById('player-tiles');
+            playerContainer.innerHTML = '';
+            playerTiles.forEach((tile, index) => {
+                const el = createTileElement(tile);
+                el.onclick = () => playerDiscard(index);
+                playerContainer.appendChild(el);
+            });
+
+            // نیشاندانی دەستەی بۆت (بە شاراوەیی)
+            const botContainer = document.getElementById('bot-tiles');
+            botContainer.innerHTML = '';
+            botTiles.forEach(() => {
+                const el = document.createElement('div');
+                el.className = 'tile';
+                el.style.backgroundColor = '#333';
+                el.style.color = '#777';
+                el.innerText = '?';
+                botContainer.appendChild(el);
+            });
+            document.getElementById('bot-count').innerText = botTiles.length;
+
+            // نیشاندانی کۆتا پارچەی فڕێدراو
+            const discardContainer = document.getElementById('discard-pile');
+            discardContainer.innerHTML = '';
+            if (discardPile.length > 0) {
+                const topDiscard = discardPile[discardPile.length - 1];
+                discardContainer.appendChild(createTileElement(topDiscard));
+            }
+        }
+
+        function createTileElement(tile) {
+            const div = document.createElement('div');
+            div.className = `tile ${tile.color}`;
+            if (tile.type === 'joker') {
+                div.innerHTML = `<span class="joker">جووکر</span>`;
+            } else {
+                div.innerHTML = `<span>${tile.value}</span>`;
+            }
+            return div;
+        }
+
+        function drawTile() {
+            if (!gameActive) return;
+            if (deck.length === 0) {
+                setMessage("دەستەی پارچەکان تەواو بوو!");
+                return;
+            }
+            if (playerTiles.length > 14) {
+                setMessage("تۆ پارچەی زیاترت هەیە، پێویستە یەکێک فڕێ بدەیت!");
+                return;
+            }
+
+            // یاریزان پارچەیەک لە دەستە سەرەکییەکان هەڵدەگرێت
+            playerTiles.push(deck.pop());
+            render();
+            setMessage("پارچەت هەڵگرت، ئێستا پارچەیەک فڕێ بدە بۆ ئەوەی نۆرەی بۆت بێت.");
+        }
+
+        function playerDiscard(index) {
+            if (!gameActive) return;
+            if (playerTiles.length <= 14) {
+                setMessage("سەرەتا دەبێت پارچەیەک هەڵگریت!");
+                return;
+            }
+
+            // فڕێدانی پارچەکە
+            const removed = playerTiles.splice(index, 1)[0];
+            discardPile.push(removed);
+            render();
+            setMessage("تۆ پارچەیەکت فڕێدا. نۆرەی بۆتە...");
+
+            // نۆڕەی بۆت (کۆمپیوتەر) پاش 1 چرکە
+            gameActive = false;
+            setTimeout(botTurn, 1000);
+        }
+
+        function botTurn() {
+            if (deck.length > 0) {
+                // بۆت پارچەیەک هەڵدەگرێت و یەکێکی نامۆ فڕێ دەدات
+                botTiles.push(deck.pop());
+                const randomIdx = Math.floor(Math.random() * botTiles.length);
+                const botRemoved = botTiles.splice(randomIdx, 1)[0];
+                discardPile.push(botRemoved);
+            }
+            gameActive = true;
+            render();
+            setMessage("نۆرەی تۆیە! پارچەیەک هەڵگرە یان فڕێ بدە.");
+        }
+
+        function setMessage(text) {
+            document.getElementById('message').innerText = text;
+        }
+
+        // دەستپێکردنی یاری لە کاتی کردنەوەی پەڕەکە
+        initGame();
+    </script>
+</body>
+</html>
