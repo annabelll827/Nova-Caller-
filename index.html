@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>یاری ئۆکەی کوردی - Okey Game</title>
+    <title>Konkan - ئۆکەی کوردی</title>
     <style>
         * {
             box-sizing: border-box;
@@ -26,17 +26,17 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 15, 25, 0.85);
+            background: rgba(15, 15, 25, 0.88);
             z-index: -1;
         }
         header {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 12px;
             margin-bottom: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -56,24 +56,38 @@
             font-size: 13px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .profile-name {
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: bold;
             color: #ffcc00;
+        }
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #d32f2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffcc00;
         }
         
         #main-menu {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 15px;
         }
         .game-card {
             flex: 1;
-            min-width: 150px;
-            max-width: 180px;
-            height: 280px;
+            min-width: 160px;
+            max-width: 185px;
+            height: 290px;
             border-radius: 16px;
             padding: 15px;
             display: flex;
@@ -87,9 +101,14 @@
             border: 1px solid rgba(255,255,255,0.2);
         }
         .game-card:hover { transform: translateY(-5px); }
+        .card-green { background: linear-gradient(135deg, #1b4d3e, #0f2d24); border-color: #2e7d32; }
+        .card-gold { background: linear-gradient(135deg, #5c4b1e, #33280e); border-color: #d4af37; }
+        .card-blue { background: linear-gradient(135deg, #1e3d5c, #0e2233); border-color: #2196f3; }
+        .card-darkblue { background: linear-gradient(135deg, #2c3e50, #1a252f); border-color: #34495e; }
         .card-red { background: linear-gradient(135deg, #5c1e1e, #330e0e); border-color: #f44336; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; }
-        .card-desc { font-size: 11px; color: #ddd; margin-bottom: 10px; }
+
+        .card-title { font-size: 15px; font-weight: bold; margin-bottom: 5px; }
+        .card-desc { font-size: 10px; color: #ddd; margin-bottom: 10px; line-height: 1.4; }
         .card-btn {
             width: 100%;
             padding: 8px;
@@ -98,9 +117,69 @@
             font-weight: bold;
             cursor: pointer;
             color: #fff;
-            background-color: #d32f2f;
         }
-        .card-icon { font-size: 35px; margin: 20px 0; }
+        .card-icon { font-size: 32px; margin: 10px 0; }
+
+        /* Bottom Menu Bar (وەک وێنەکە) */
+        .bottom-nav-bar {
+            width: 100%;
+            max-width: 950px;
+            background: rgba(0, 0, 0, 0.65);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-left-icons, .nav-right-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .nav-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(50, 50, 65, 0.8);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover { background: rgba(80, 80, 100, 1); }
+        .center-tasks {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .task-capsule {
+            background: rgba(30, 30, 45, 0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 6px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .friends-btn {
+            background: linear-gradient(135deg, #d4af37, #aa820a);
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
         /* Game Board Area */
         #game-area {
@@ -109,7 +188,7 @@
             max-width: 750px;
             flex-direction: column;
             gap: 10px;
-            background: rgba(0,0,0,0.75);
+            background: rgba(0,0,0,0.8);
             padding: 15px;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -128,7 +207,6 @@
             cursor: pointer;
         }
         
-        /* Center Table Layout */
         #center-table {
             display: flex;
             justify-content: center;
@@ -138,7 +216,6 @@
             padding: 15px;
             border-radius: 10px;
             min-height: 120px;
-            position: relative;
         }
         .table-section {
             display: flex;
@@ -151,7 +228,6 @@
             color: #ccc;
         }
 
-        /* Tiles Styles */
         .tiles-container {
             display: flex;
             flex-wrap: wrap;
@@ -183,7 +259,6 @@
         .tile.yellow { color: #f0ad4e; }
         .tile.joker { color: #8a2be2; font-size: 10px; border: 1px dashed #8a2be2; }
 
-        /* Player Board (Camouflage style) */
         .player-board {
             background: linear-gradient(135deg, #4b5320, #2e3512);
             border: 3px solid #1e240a;
@@ -191,7 +266,6 @@
             padding: 10px;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
         }
-
         .deck-draw-btn {
             background: #2196f3;
             color: white;
@@ -202,7 +276,6 @@
             cursor: pointer;
             font-size: 12px;
         }
-
         #message {
             font-size: 13px;
             color: #ffeb3b;
@@ -215,31 +288,87 @@
 
     <header>
         <div class="user-info">
+            <div class="currency-box">➕</div>
             <div class="currency-box">🟡 <span id="coins">97,000</span></div>
             <div class="currency-box">💎 <span id="gems">123</span></div>
-            <div class="currency-box" style="border-color: #ffcc00;">🏆 خاڵ: <span id="player-points" style="color: #ffcc00; font-weight: bold;">81</span></div>
         </div>
-        <div>
-            <span class="profile-name">Callvin_B</span> 👤
+        <div class="profile-section">
+            <span>Callvin_B</span>
+            <div class="profile-avatar">🇮🇶</div>
         </div>
     </header>
 
     <div id="main-menu">
+        <div class="game-card card-green" onclick="alert('دۆمینە بە زوویی دەست پێدەکات!')">
+            <div>
+                <div class="card-title">دۆمینە</div>
+                <div class="card-desc">٢٨ پۆل، دوو تیم، یەک پالەوان.</div>
+            </div>
+            <div class="card-icon">🁫</div>
+            <button class="card-btn" style="background-color: #2e7d32;">یاریکردن</button>
+        </div>
+
+        <div class="game-card card-gold" onclick="alert('پاڵەوانێتیەکان بە زوویی بەردەست دەبن!')">
+            <div>
+                <div class="card-title">پاڵەوانێتیەکان</div>
+                <div class="card-desc">رکابەری بکە بۆ خەڵاتی گەورە و خۆت بسەلمێنە.</div>
+            </div>
+            <div class="card-icon">🏆</div>
+            <button class="card-btn" style="background-color: #b8860b;">پاڵەوانێتیەکان</button>
+        </div>
+
+        <div class="game-card card-blue" onclick="alert('ڕیزبەندیەکان')">
+            <div>
+                <div class="card-title">ڕیزبەندی (پلەکان)</div>
+                <div class="card-desc">پەیوەندی بە ڕیزبەندی جیهانییەوە بکە.</div>
+            </div>
+            <div class="card-icon">🛡️</div>
+            <button class="card-btn" style="background-color: #1976d2;">پلەکان</button>
+        </div>
+
+        <div class="game-card card-darkblue" onclick="alert('ڕیزبەندی گشتی')">
+            <div>
+                <div class="card-title">ڕیزبەندی</div>
+                <div class="card-desc">پارییەکی پێشبڕکێ بۆ پلەی جیهانی.</div>
+            </div>
+            <div class="card-icon">🎖️</div>
+            <button class="card-btn" style="background-color: #34495e;">یاری بکە</button>
+        </div>
+
         <div class="game-card card-red" onclick="startOkeyGame()">
             <div>
                 <div class="card-title">یاری خێرا</div>
-                <div class="card-desc">ئۆکەی کوردی: ١٥ پارچە و خاڵبەندی ٨١.</div>
+                <div class="card-desc">یاسای کلاسیک، پاریزی خێرا و مەرجی ٨١ خاڵ.</div>
             </div>
             <div class="card-icon">▶️</div>
-            <button class="card-btn">یاریکردن</button>
+            <button class="card-btn" style="background-color: #d32f2f;">یاریکردن</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav-bar" id="bottom-bar">
+        <div class="nav-left-icons">
+            <button class="nav-btn" onclick="alert('ڕێکخستنەکان')">⚙️</button>
+            <button class="nav-btn" onclick="alert('ڕێنمایی و زانیاری')">💡</button>
+            <button class="nav-btn" onclick="alert('مۆسیقا و دەنگ')">📻</button>
+        </div>
+        
+        <div class="center-tasks">
+            <div class="task-capsule" onclick="alert('ئەرکە ڕۆژانەکان')">📋</div>
+            <div class="task-capsule" onclick="alert('پێشبڕکێکان')">🎯</div>
+            <div class="task-capsule" onclick="alert('سوڕانەوەی خەڵات')">🎡</div>
+        </div>
+
+        <div class="nav-right-icons">
+            <button class="nav-btn" onclick="alert('یارمەتی')">❓</button>
+            <button class="friends-btn" onclick="alert('هاوڕێکان')">➕ هاوڕێکان</button>
         </div>
     </div>
 
     <div id="game-area">
         <div class="top-game-bar">
-            <button class="back-menu-btn" onclick="backToMenu()">گەڕانەوە</button>
-            <div id="message">یاری دەستی پێکرد!</div>
-            <div>خاڵی بۆت: <span id="bot-points" style="color: #ff5252; font-weight: bold;">81</span></div>
+            <button class="back-menu-btn" onclick="backToMenu()">گەڕانەوە بۆ مینیو</button>
+            <div id="message">یاری Konkan دەستی پێکرد!</div>
+            <div>خاڵی تۆ: <span id="player-points" style="color: #ffcc00; font-weight: bold;">81</span> | بۆت: <span id="bot-points" style="color: #ff5252; font-weight: bold;">81</span></div>
         </div>
         
         <div class="section" style="background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px;">
@@ -249,7 +378,7 @@
 
         <div id="center-table">
             <div class="table-section">
-                <span class="table-label">ڕوو (جووکر)</span>
+                <span class="table-label">جووکر (ڕوو)</span>
                 <div id="indicator-container"></div>
             </div>
 
@@ -283,12 +412,14 @@
 
         function startOkeyGame() {
             document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('bottom-bar').style.display = 'none';
             document.getElementById('game-area').style.display = 'flex';
             initGame();
         }
 
         function backToMenu() {
             document.getElementById('main-menu').style.display = 'flex';
+            document.getElementById('bottom-bar').style.display = 'flex';
             document.getElementById('game-area').style.display = 'none';
         }
 
@@ -316,7 +447,6 @@
 
             indicatorTile = deck.pop();
             
-            // نیشاندانی جووکر لە دەستەچەپ
             const indicatorCont = document.getElementById('indicator-container');
             indicatorCont.innerHTML = '';
             indicatorCont.appendChild(createTileElement(indicatorTile));
@@ -326,7 +456,7 @@
             discardPile.push(deck.pop());
 
             updateScoreUI();
-            setMessage("نۆرەی تۆیە: 15 پارچەت هەیە، سەرەتا پارچەیەک فڕێ بدە!");
+            setMessage("یاسای کوردی (Konkan): تۆ ١٥ پارچەت هەیە، سەرەتا پارچەیەک فڕێ بدە!");
             render();
         }
 
@@ -383,7 +513,7 @@
                 return;
             }
             if (playerTiles.length > 14) {
-                setMessage("تۆ 15 پارچەت هەیە، سەرەتا دەبێت یەکێک فڕێ بدەیت!");
+                setMessage("تۆ ١٥ پارچەت هەیە، سەرەتا دەبێت یەکێک فڕێ بدەیت!");
                 return;
             }
             playerTiles.push(deck.pop());
@@ -394,7 +524,7 @@
         function playerDiscard(index) {
             if (!gameActive) return;
             if (playerTiles.length <= 14) {
-                setMessage("سەرەتا دەبێت پارچەیەک لە گردۆکەکە هەڵگریت!");
+                setMessage("سەرەتا دەبێت پارچەیەک هەڵگریت!");
                 return;
             }
             const removed = playerTiles.splice(index, 1)[0];
