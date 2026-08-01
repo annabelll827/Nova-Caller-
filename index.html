@@ -12,6 +12,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
+        :root {
+            --transition: 0.25s;
+            --spark: 1.8s;
+        }
+
         body {
             background-color: #0f0f11;
             color: #ffffff;
@@ -258,25 +263,18 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            align-items: center;
         }
 
-        .btn {
+        .btn-secondary {
+            background-color: #27272a;
+            color: white;
             padding: 8px 16px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             border: none;
-        }
-
-        .btn-primary {
-            background-color: #6366f1;
-            color: white;
-        }
-
-        .btn-secondary {
-            background-color: #27272a;
-            color: white;
         }
 
         .shape-options {
@@ -299,6 +297,55 @@
             border-color: #6366f1;
             color: #fff;
             background: #27272a;
+        }
+
+        /* Custom Sparkle Button Styles */
+        button.sparkle-btn {
+            --cut: 0.1em;
+            --active: 0;
+            --bg:
+                radial-gradient(
+                    40% 50% at center 100%,
+                    hsl(270 calc(var(--active) * 97%) 72% / var(--active)),
+                    transparent
+                ),
+                radial-gradient(
+                    80% 100% at center 120%,
+                    hsl(260 calc(var(--active) * 97%) 70% / var(--active)),
+                    transparent
+                ),
+                hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + 12%));
+            background: var(--bg);
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + 20%));
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            color: white;
+            transition: background var(--transition), border var(--transition);
+            position: relative;
+        }
+
+        button.sparkle-btn:hover {
+            --active: 1;
+        }
+
+        .sparkle-btn .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .sparkle-btn .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
         }
 
         /* Background Section Styles */
@@ -410,6 +457,7 @@
             <span class="tab">Tracks</span>
         </div>
 
+        <!-- Avatar Card Section -->
         <div class="card">
             <div class="card-title">Avatar</div>
             
@@ -421,10 +469,18 @@
             <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="previewAvatar(this)">
 
             <div class="btn-group">
-                <button class="btn btn-primary" id="change-initial-btn" onclick="document.getElementById('file-input').click()">Change Avatar</button>
-                <button class="btn btn-primary" id="save-btn" style="display: none;" onclick="saveAvatar()">Save Avatar</button>
-                <button class="btn btn-primary" id="change-btn" style="display: none;" onclick="document.getElementById('file-input').click()">Change Avatar</button>
-                <button class="btn btn-secondary" id="remove-btn" style="display: none;" onclick="removeAvatar()">Remove Avatar</button>
+                <button class="sparkle-btn" id="change-initial-btn" onclick="document.getElementById('file-input').click()">Change Avatar</button>
+                
+                <button class="sparkle-btn" id="save-btn" style="display: none;" onclick="saveAvatar()">
+                    Save Avatar
+                    <span class="particles">
+                        <svg class="particle" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z" fill="#a78bfa" stroke="#a78bfa" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="particle" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z" fill="#a78bfa" stroke="#a78bfa" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </button>
+
+                <button class="sparkle-btn" id="change-btn" style="display: none;" onclick="document.getElementById('file-input').click()">Change Avatar</button>
+                <button class="btn-secondary" id="remove-btn" style="display: none;" onclick="removeAvatar()">Remove Avatar</button>
             </div>
             
             <div class="card-title" style="margin-top: 20px;">Avatar Shape</div>
@@ -434,6 +490,7 @@
             </div>
         </div>
 
+        <!-- Background Card Section -->
         <div class="card">
             <div class="card-title">Background</div>
             
@@ -445,10 +502,18 @@
             <input type="file" id="bg-file-input" accept="image/*" style="display: none;" onchange="previewBg(this)">
 
             <div class="btn-group">
-                <button class="btn btn-primary" id="bg-change-initial-btn" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
-                <button class="btn btn-primary" id="bg-save-btn" style="display: none;" onclick="saveBg()">Save Image</button>
-                <button class="btn btn-primary" id="bg-change-btn" style="display: none;" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
-                <button class="btn btn-secondary" id="bg-remove-btn" style="display: none;" onclick="removeBg()">Remove Image</button>
+                <button class="sparkle-btn" id="bg-change-initial-btn" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
+                
+                <button class="sparkle-btn" id="bg-save-btn" style="display: none;" onclick="saveBg()">
+                    Save Image
+                    <span class="particles">
+                        <svg class="particle" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z" fill="#a78bfa" stroke="#a78bfa" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg class="particle" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.937 3.846L7.75 1L8.563 3.846C8.77313 4.58114 9.1671 5.25062 9.70774 5.79126C10.2484 6.3319 10.9179 6.72587 11.653 6.936L14.5 7.75L11.654 8.563C10.9189 8.77313 10.2494 9.1671 9.70874 9.70774C9.1681 10.2484 8.77413 10.9179 8.564 11.653L7.75 14.5L6.937 11.654C6.72687 10.9189 6.3329 10.2494 5.79226 9.70874C5.25162 9.1681 4.58214 8.77413 3.847 8.564L1 7.75L3.846 6.937C4.58114 6.72687 5.25062 6.3329 5.79126 5.79226C6.3319 5.25162 6.72587 4.58214 6.936 3.847L6.937 3.846Z" fill="#a78bfa" stroke="#a78bfa" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                </button>
+
+                <button class="sparkle-btn" id="bg-change-btn" style="display: none;" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
+                <button class="btn-secondary" id="bg-remove-btn" style="display: none;" onclick="removeBg()">Remove Image</button>
             </div>
 
             <div class="bg-desc">Pick an image or a video background. Color will be removed.</div>
@@ -478,7 +543,7 @@
                     text.style.display = 'none';
 
                     document.getElementById('change-initial-btn').style.display = 'none';
-                    document.getElementById('save-btn').style.display = 'block';
+                    document.getElementById('save-btn').style.display = 'inline-flex';
                     document.getElementById('change-btn').style.display = 'none';
                     document.getElementById('remove-btn').style.display = 'none';
                 }
@@ -488,8 +553,8 @@
 
         function saveAvatar() {
             document.getElementById('save-btn').style.display = 'none';
-            document.getElementById('change-btn').style.display = 'block';
-            document.getElementById('remove-btn').style.display = 'block';
+            document.getElementById('change-btn').style.display = 'inline-flex';
+            document.getElementById('remove-btn').style.display = 'inline-flex';
         }
 
         function removeAvatar() {
@@ -503,7 +568,7 @@
             fileInput.value = '';
             tempImageSrc = '';
 
-            document.getElementById('change-initial-btn').style.display = 'block';
+            document.getElementById('change-initial-btn').style.display = 'inline-flex';
             document.getElementById('save-btn').style.display = 'none';
             document.getElementById('change-btn').style.display = 'none';
             document.getElementById('remove-btn').style.display = 'none';
@@ -522,7 +587,7 @@
         function previewBg(input) {
             if (input.files && input.files[0]) {
                 document.getElementById('bg-change-initial-btn').style.display = 'none';
-                document.getElementById('bg-save-btn').style.display = 'block';
+                document.getElementById('bg-save-btn').style.display = 'inline-flex';
                 document.getElementById('bg-change-btn').style.display = 'none';
                 document.getElementById('bg-remove-btn').style.display = 'none';
             }
@@ -530,15 +595,15 @@
 
         function saveBg() {
             document.getElementById('bg-save-btn').style.display = 'none';
-            document.getElementById('bg-change-btn').style.display = 'block';
-            document.getElementById('bg-remove-btn').style.display = 'block';
+            document.getElementById('bg-change-btn').style.display = 'inline-flex';
+            document.getElementById('bg-remove-btn').style.display = 'inline-flex';
         }
 
         function removeBg() {
             const fileInput = document.getElementById('bg-file-input');
             fileInput.value = '';
 
-            document.getElementById('bg-change-initial-btn').style.display = 'block';
+            document.getElementById('bg-change-initial-btn').style.display = 'inline-flex';
             document.getElementById('bg-save-btn').style.display = 'none';
             document.getElementById('bg-change-btn').style.display = 'none';
             document.getElementById('bg-remove-btn').style.display = 'none';
