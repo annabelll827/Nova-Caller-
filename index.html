@@ -29,6 +29,16 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 20px;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: -260px; /* بە شێوەی سەرەتایی شاراوەیە لە موبایلدا */
+            transition: 0.3s ease-in-out;
+            z-index: 1000;
+        }
+
+        aside.active {
+            left: 0; /* کاتێک کارا دەبێت دەردەکەوێت */
         }
 
         .logo-area {
@@ -37,7 +47,17 @@
             margin-bottom: 30px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+        }
+
+        /* Close Button inside sidebar for mobile */
+        .close-btn {
+            background: none;
+            border: none;
+            color: #a1a1aa;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
         }
 
         .menu-section {
@@ -78,12 +98,9 @@
             border-top: 1px solid #222226;
         }
 
-        .user-info {
-            font-size: 13px;
-        }
-
         .user-info .username {
             font-weight: 600;
+            font-size: 13px;
         }
 
         .user-info .uid {
@@ -96,6 +113,8 @@
             flex: 1;
             overflow-y: auto;
             padding: 30px 40px;
+            margin-left: 0;
+            width: 100%;
         }
 
         .header {
@@ -103,6 +122,32 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Hamburger Menu Button (سێ خەتەکە) */
+        .hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: 0.3s;
         }
 
         .header h1 {
@@ -125,6 +170,22 @@
             background: #27272a;
         }
 
+        /* Overlay background when menu is open */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         /* Tabs */
         .tabs {
             display: flex;
@@ -132,6 +193,7 @@
             border-bottom: 1px solid #222226;
             padding-bottom: 15px;
             margin-bottom: 30px;
+            overflow-x: auto;
         }
 
         .tab {
@@ -140,13 +202,14 @@
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .tab.active {
             color: #ffffff;
         }
 
-        /* Card / Section Box */
+        /* Card Section */
         .card {
             background-color: #141416;
             border: 1px solid #222226;
@@ -204,6 +267,7 @@
         .shape-options {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .shape-btn {
@@ -220,15 +284,32 @@
             border-color: #6366f1;
             color: #fff;
         }
+
+        @media(min-width: 1024px) {
+            aside {
+                left: 0;
+                position: relative;
+            }
+            .hamburger {
+                display: none;
+            }
+            .close-btn {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <aside>
+    <!-- Overlay بۆ تاریککردنی پشتەوە کاتێک مینیو دەکرێتەوە -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Sidebar (مینیوی لای چەپ) -->
+    <aside id="sidebar">
         <div>
             <div class="logo-area">
-                <span>⚡</span> feds.lol
+                <span>⚡ feds.lol</span>
+                <button class="close-btn" onclick="toggleMenu()">✕</button>
             </div>
             
             <div class="menu-section">
@@ -264,7 +345,15 @@
     <!-- Main Content -->
     <main>
         <div class="header">
-            <h1>Customize</h1>
+            <div class="header-left">
+                <!-- دوگمەی سێ خەت (Hamburger Menu) -->
+                <button class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1>Customize</h1>
+            </div>
             <button class="view-profile-btn">View Profile</button>
         </div>
 
@@ -281,7 +370,6 @@
         <div class="card">
             <div class="card-title">Avatar</div>
             <div class="avatar-preview">
-                <!-- نموونەی وێنە -->
                 <img src="https://via.placeholder.com/80" alt="Avatar">
             </div>
             <div class="btn-group">
@@ -298,6 +386,16 @@
             </div>
         </div>
     </main>
+
+    <!-- JavaScript بۆ کردنەوە و داخستنی مینیوەکە -->
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+    </script>
 
 </body>
 </html>
