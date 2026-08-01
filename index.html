@@ -691,14 +691,14 @@
         </div>
     </div>
 
-    <!-- Step 4: Verify Email Code Screen -->
+    <!-- Step 4: Confirm Password Screen -->
     <div id="verify-screen">
         <div class="box-container">
-            <p class="title">Check your email</p>
-            <p style="font-size: 13px; color: #a1a1aa; text-align: center; margin-bottom: 20px;">We've sent a verification code to your email.</p>
+            <p class="title">Confirm Password</p>
+            <p style="font-size: 13px; color: #a1a1aa; text-align: center; margin-bottom: 20px;">Please confirm your password to continue.</p>
             <form class="form" onsubmit="handleVerifySubmit(event)">
-                <input type="text" class="input" placeholder="Enter E-mail Code" required style="text-align: center; letter-spacing: 2px; font-size: 16px;">
-                <button type="submit" class="form-btn" style="background: teal;">Verify & Continue</button>
+                <input type="password" class="input" placeholder="Confirm Password" required style="font-size: 14px;">
+                <button type="submit" class="form-btn" style="background: teal;">Confirm & Continue</button>
             </form>
         </div>
     </div>
@@ -911,7 +911,6 @@
 
         function handleSignupSubmit(event) {
             event.preventDefault();
-            alert("Verification code has been sent to your email!");
             document.getElementById('signup-screen').style.display = 'none';
             document.getElementById('verify-screen').style.display = 'flex';
         }
