@@ -389,6 +389,8 @@
             <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="previewAvatar(this)">
 
             <div class="btn-group" id="btn-group">
+                <button class="btn btn-primary" id="change-initial-btn" onclick="document.getElementById('file-input').click()">Change Avatar</button>
+                
                 <button class="btn btn-primary" id="save-btn" style="display: none;" onclick="saveAvatar()">Save Avatar</button>
                 
                 <button class="btn btn-primary" id="change-btn" style="display: none;" onclick="document.getElementById('file-input').click()">Change Avatar</button>
@@ -424,7 +426,8 @@
                     img.style.display = 'block';
                     text.style.display = 'none';
 
-                    // کاتێک وێنە هەڵدەبژێردرێت، دوگمەی Save Avatar دەردەکەوێت
+                    // کاتێک وێنە هەڵدەبژێردرێت، دوگمەی سەرەتایی دەشاردرێتەوە و Save Avatar دەردەکەوێت
+                    document.getElementById('change-initial-btn').style.display = 'none';
                     document.getElementById('save-btn').style.display = 'block';
                     document.getElementById('change-btn').style.display = 'none';
                     document.getElementById('remove-btn').style.display = 'none';
@@ -434,7 +437,7 @@
         }
 
         function saveAvatar() {
-            // کاتێک Save دەکرێت، دوگمەی Save دەڕوات و Change و Remove دەردەکەون
+            // کاتێک Save دەکرێت، Save دەڕوات و Change و Remove دەردەکەون
             document.getElementById('save-btn').style.display = 'none';
             document.getElementById('change-btn').style.display = 'block';
             document.getElementById('remove-btn').style.display = 'block';
@@ -451,7 +454,8 @@
             fileInput.value = '';
             tempImageSrc = '';
 
-            // بە سڕینەوەی وێنە، هەموو دوگمەکان دەشاردرێنەوە تاوەکو وێنەیەکی نوێ دادەنێیت
+            // بە سڕینەوەی وێنە، دەگەڕێتەوە دۆخی سەرەتایی و تەنها Change Avatar دەردەکەوێت
+            document.getElementById('change-initial-btn').style.display = 'block';
             document.getElementById('save-btn').style.display = 'none';
             document.getElementById('change-btn').style.display = 'none';
             document.getElementById('remove-btn').style.display = 'none';
