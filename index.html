@@ -26,21 +26,13 @@
 
         /* Common Box Container Style */
         .box-container {
-            width: 380px;
+            width: 420px;
             background-color: #141416;
             border: 1px solid #222226;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
             border-radius: 16px;
             box-sizing: border-box;
             padding: 30px;
-        }
-
-        .title {
-            text-align: center;
-            color: #ffffff;
-            margin: 0 0 25px 0;
-            font-size: 24px;
-            font-weight: 700;
         }
 
         .form {
@@ -51,35 +43,56 @@
             margin-bottom: 15px;
         }
 
-        .input {
-            border-radius: 12px;
+        /* Custom Input Group matching the image */
+        .input-group {
+            display: flex;
+            align-items: center;
+            border-radius: 14px;
             border: 1px solid #27272a;
-            background: #1e1e24;
+            background: #19191e;
+            overflow: hidden;
+            width: 100%;
+            padding: 4px;
+        }
+
+        .input-prefix {
+            padding: 12px 4px 12px 14px;
+            color: #818cf8;
+            font-size: 14px;
+            font-weight: 500;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .input-custom {
+            border: none;
+            background: transparent;
             color: #ffffff;
-            outline: 0 !important;
-            box-sizing: border-box;
-            padding: 12px 15px;
+            outline: none !important;
+            width: 100%;
+            padding: 12px 10px 12px 4px;
             font-size: 14px;
         }
 
-        .input::placeholder {
+        .input-custom::placeholder {
             color: #71717a;
         }
 
         .form-btn {
-            padding: 12px 15px;
-            border-radius: 12px;
+            padding: 14px 15px;
+            border-radius: 14px;
             border: 0 !important;
             outline: 0 !important;
-            background: #6366f1;
+            background: #4f46e5;
             color: white;
             font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
         }
 
         .form-btn:hover {
-            background: #4f46e5;
+            background: #4338ca;
         }
 
         /* Screens */
@@ -628,10 +641,12 @@
     <!-- Step 1: Username Screen -->
     <div id="username-screen">
         <div class="box-container">
-            <p class="title">Claim your link</p>
             <form class="form" onsubmit="handleUsernameSubmit(event)">
-                <input type="text" id="input-username" class="input" placeholder="Enter username (e.g. zagros)" required>
-                <button type="submit" class="form-btn" style="background: #6366f1;">Continue</button>
+                <div class="input-group">
+                    <span class="input-prefix">krd.lol/</span>
+                    <input type="text" id="input-username" class="input-custom" placeholder="username" required>
+                </div>
+                <button type="submit" class="form-btn">Claim Username</button>
             </form>
         </div>
     </div>
@@ -639,10 +654,10 @@
     <!-- Step 2: Login Screen -->
     <div id="login-screen">
         <div class="box-container">
-            <p class="title">Welcome back</p>
+            <p class="card-title" style="font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 20px;">Welcome back</p>
             <form class="form" onsubmit="handleLogin(event)">
-                <input type="email" id="login-email" class="input" placeholder="Email" required>
-                <input type="password" class="input" placeholder="Password" required>
+                <input type="email" id="login-email" class="input-custom" style="background:#1e1e24; border:1px solid #27272a; border-radius:12px; padding:12px 15px;" placeholder="Email" required>
+                <input type="password" class="input-custom" style="background:#1e1e24; border:1px solid #27272a; border-radius:12px; padding:12px 15px;" placeholder="Password" required>
                 <p class="page-link">
                     <span class="page-link-label">Forgot Password?</span>
                 </p>
@@ -679,11 +694,11 @@
     <!-- Step 3: Sign Up (Create account) Screen -->
     <div id="signup-screen">
         <div class="box-container">
-            <p class="title">Create account</p>
+            <p class="card-title" style="font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 20px;">Create account</p>
             <form class="form" onsubmit="handleSignupSubmit(event)">
-                <input type="email" class="input" placeholder="E-mail" required>
-                <input type="password" id="signup-password" class="input" placeholder="Password" required>
-                <input type="password" id="signup-confirm-password" class="input" placeholder="Confirm Password" required>
+                <input type="email" class="input-custom" style="background:#1e1e24; border:1px solid #27272a; border-radius:12px; padding:12px 15px;" placeholder="E-mail" required>
+                <input type="password" id="signup-password" class="input-custom" style="background:#1e1e24; border:1px solid #27272a; border-radius:12px; padding:12px 15px;" placeholder="Password" required>
+                <input type="password" id="signup-confirm-password" class="input-custom" style="background:#1e1e24; border:1px solid #27272a; border-radius:12px; padding:12px 15px;" placeholder="Confirm Password" required>
                 <button type="submit" class="form-btn" style="background: teal;">Create account</button>
             </form>
             <p class="sign-up-label">
