@@ -1,123 +1,58 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="ku" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پشکنینی ژمارەی مۆبایل</title>
-    <style>
-        body {
-            font-family: Tahoma, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 70vh;
-        }
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 5px;
-        }
-        p.subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        input {
-            width: 90%;
-            padding: 14px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            outline: none;
-            transition: 0.3s;
-        }
-        input:focus {
-            border-color: #007bff;
-        }
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            display: none;
-            text-align: right;
-        }
-        .result-box p {
-            margin: 8px 0;
-            color: #444;
-            font-size: 15px;
-        }
-        .error {
-            color: #dc3545 !important;
-            text-align: center !important;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>slat.cc Clone</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--accent:#0F7959;--bg:#0a0a0a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#fff;font-family:Inter,sans-serif;overflow:hidden}
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,.12)}
+.btn{height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13px}
+.btn-primary{background:#fff;color:#000;font-weight:600}
+input,textarea,select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;padding:10px 12px;font-size:13px;outline:none}
+.app{display:grid;grid-template-columns:380px 1fr;height:100vh}
+.editor{overflow:auto;border-right:1px solid #1a1a1a;background:#0f0f0f;padding:16px}
+.preview{position:relative;display:grid;place-items:center;background:#050505;overflow:auto;padding:24px}
+.phone{width:360px;min-height:680px;border-radius:32px;border:8px solid #1a1a1a;background:#000;overflow:hidden;position:relative;box-shadow:0 20px 80px rgba(0,0,0,.8)}
+.drawer{position:fixed;inset:0;z-index:50;display:none}
+.drawer.open{display:block}
+.drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}
+.drawer-panel{position:absolute;left:0;top:0;bottom:0;width:280px;background:#0f0f0f;border-right:1px solid #222;padding:16px 0;transform:translateX(-100%);transition:.3s}
+.drawer.open.drawer-panel{transform:translateX(0)}
+.menu-item{display:flex;align-items:center;gap:12px;padding:12px 20px;color:#888;font-size:14px;cursor:pointer}
+.menu-item:hover{background:#1a1a1a;color:#fff}
+.menu-head{padding:18px 20px 6px;font-size:12px;color:#555;text-transform:uppercase;letter-spacing:.08em}
+.hamburger{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:grid;place-items:center;cursor:pointer}
+@keyframes rainbow{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+@keyframes glitch{0%{text-shadow:2px 0 red,-2px 0 blue}50%{text-shadow:-2px 0 red,2px 0 blue}100%{text-shadow:2px 0 red,-2px 0 blue}}
+</style>
 </head>
 <body>
-
-    <div class="card">
-        <h2>سیستمی زانیاری ژمارە</h2>
-        <p class="subtitle">ژمارەی مۆبایل بنووسە بۆ دۆزینەوەی ناو و شار</p>
-        
-        <input type="text" id="phoneInput" placeholder="نموونە: 07701234567" oninput="autoSearch()">
-
-        <div id="resultBox" class="result-box">
-            <p><strong>ناو:</strong> <span id="resName">-</span></p>
-            <p><strong>شار:</strong> <span id="resCity">-</span></p>
-        </div>
-    </div>
-
-    <script>
-        // لێرەدا داتابەیسە کاتییەکەت دادەنێیت (دەتوانیت سەدان ژمارەی تێدا زیاد بکەیت)
-        const database = {
-            "07701234567": { name: "احمد محمد", city: "هەولێر" },
-            "07509876543": { name: "سۆما عومەر", city: "سلێمانی" },
-            "07801112233": { name: "کاروان علی", city: "بەغدا" },
-            "07712345678": { name: "محەمەد قادر", city: "کەرکووک" },
-            "07511112222": { name: "ڕۆژان ئەمین", city: "دهۆک" }
-        };
-
-        function autoSearch() {
-            const phone = document.getElementById('phoneInput').value.trim();
-            const resultBox = document.getElementById('resultBox');
-            const resName = document.getElementById('resName');
-            const resCity = document.getElementById('resCity');
-
-            // ئەگەر خانەکە بەتاڵ بوو، ئەنجامەکە بشارەوە
-            if (phone === "") {
-                resultBox.style.display = "none";
-                return;
-            }
-
-            // پشکنین لە ناو داتابەیسەکەدا
-            if (database[phone]) {
-                resName.textContent = database[phone].name;
-                resCity.textContent = database[phone].city;
-                resName.className = "";
-                resultBox.style.display = "block";
-            } else {
-                // ئەگەر ژمارەکە نەدۆزرایەوە
-                resName.textContent = "هیچ زانیارییەک بۆ ئەم ژمارەیە نەدۆزرایەوە";
-                resName.className = "error";
-                resCity.textContent = "-";
-                resultBox.style.display = "block";
-            }
-        }
-    </script>
-
+<div id="drawer" class="drawer" onclick="closeDrawer()"><div class="drawer-bg"></div><div class="drawer-panel" onclick="event.stopPropagation()"><div style="padding:0 20px 16px;font-weight:700;font-size:18px">slat.cc</div><div class="menu-head">Customize</div><div class="menu-item" onclick="go('profile')">👤✏️ Profile</div><div class="menu-item" onclick="go('appearance')">🎨 Appearance</div><div class="menu-item" onclick="go('links')">🔗 Links</div><div class="menu-item" onclick="go('badges')">🛡️ Badges</div><div class="menu-item" onclick="go('widgets')">🧩 Widgets</div><div class="menu-item" onclick="go('tracks')">🎵 Tracks</div><div class="menu-head">Manage</div><div class="menu-item" onclick="go('settings')">⚙️ Settings</div></div></div>
+<div class="app">
+<div class="editor" id="editorScroll">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><div class="hamburger" onclick="openDrawer()">☰</div><div style="font-weight:800">slat.cc</div><div style="margin-left:auto;display:flex;gap:8px"><button class="btn" onclick="copyLink()">Copy</button><button class="btn btn-primary" onclick="alert('Published!')">Publish</button></div></div>
+<div class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><div style="font-size:12px;color:#aaa;margin-bottom:6px">Username</div><div style="display:flex;gap:8px"><span style="display:grid;place-items:center;padding:0 10px;background:rgba(255,255,255,.06);border-radius:12px;font-size:12px">slat.cc/</span><input id="username" value="rezhin" oninput="render()"></div></div>
+<div id="profile" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><h3>👤 Profile</h3><label style="font-size:11px;color:#aaa">Avatar URL</label><input id="avatar" value="https://i.pravatar.cc/300?img=32" oninput="render()"><label style="font-size:11px;color:#aaa">Display Name</label><input id="dname" value="ڕێژین" oninput="render()"><label style="font-size:11px;color:#aaa">Bio</label><textarea id="bio" oninput="render()">دیجیتال کریەیتەر | گەشەپێدەری وێب 🌿
+خەونەکانم دەکەم بە کۆد</textarea><label style="font-size:11px;color:#aaa">Location</label><input id="loc" value="هەولێر، کوردستان" oninput="render()"><div style="display:flex;gap:8px;margin-top:8px"><label><input type="checkbox" id="verified" checked onchange="render()"> Verified</label><label><input type="checkbox" id="premium" onchange="render()"> Premium</label></div><label style="font-size:11px;color:#aaa">Name Effect</label><select id="neffect" onchange="render()"><option value="none">None</option><option value="glow" selected>Glow</option><option value="rainbow">Rainbow</option><option value="glitch">Glitch</option></select></div>
+<div id="appearance" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><h3>🎨 Appearance</h3><label style="font-size:11px;color:#aaa">Background Type</label><select id="bgtype" onchange="render()"><option value="color">Color</option><option value="gradient" selected>Gradient</option><option value="image">Image</option><option value="video">Video</option></select><input id="bgcolor" type="color" value="#0F7959" oninput="render()" style="height:36px;padding:2px;margin-top:6px"><input id="bgimage" value="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1000" oninput="render()" placeholder="Image/Video URL" style="margin-top:6px"><label style="font-size:11px;color:#aaa">Blur <span id="blurv">8</span></label><input type="range" id="blur" min="0" max="20" value="8" oninput="render()"><label style="font-size:11px;color:#aaa">Overlay <span id="overv">45</span>%</label><input type="range" id="overlay" min="0" max="90" value="45" oninput="render()"><label style="font-size:11px;color:#aaa">Card Radius <span id="radv">20</span></label><input type="range" id="radius" min="8" max="32" value="20" oninput="render()"><label><input type="checkbox" id="particles" checked onchange="render()"> Particles / Stars</label><select id="vfx" onchange="render()" style="margin-top:6px"><option value="none">VFX None</option><option value="stars" selected>Stars</option><option value="snow">Snow</option><option value="rain">Rain</option></select></div>
+<div id="links" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><div style="display:flex;justify-content:space-between"><h3>🔗 Links</h3><button class="btn" onclick="addLink()">+ Add</button></div><div id="linksEditor" style="margin-top:10px;display:grid;gap:8px"></div></div>
+<div id="badges" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><h3>🛡️ Badges</h3><input id="badgeInput" placeholder="Badge text" value="Top Creator"><button class="btn" onclick="addBadge()" style="margin-top:6px">Add Badge</button><div id="badgeList" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"></div></div>
+<div id="widgets" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><h3>🧩 Widgets</h3><label><input type="checkbox" id="discordEn" checked onchange="render()"> Discord Presence</label><input id="discordUser" value="rezhin#0001" oninput="render()" style="margin-top:6px"></div>
+<div id="tracks" class="glass" style="padding:14px;border-radius:16px;margin-bottom:14px"><h3>🎵 Tracks / Audio</h3><input id="audioUrl" placeholder="MP3 URL" oninput="render()"><label style="font-size:12px"><input type="checkbox" id="autoplay" onchange="render()"> Autoplay</label></div>
+<div id="settings" class="glass" style="padding:14px;border-radius:16px;margin-bottom:80px"><h3>⚙️ Settings</h3><label style="font-size:11px;color:#aaa">Custom Domain</label><input id="cdomain" placeholder="yourdomain.com"></div>
+</div>
+<div class="preview" id="previewRoot"><div class="phone" id="phone"><div id="bgLayer" style="position:absolute;inset:0"></div><div id="overlayLayer" style="position:absolute;inset:0;background:rgba(0,0,0,.45)"></div><canvas id="fx" style="position:absolute;inset:0;pointer-events:none"></canvas><div style="position:relative;z-index:2;padding:24px;display:flex;flex-direction:column;align-items:center;min-height:100%"><img id="pAvatar" src="https://i.pravatar.cc/300?img=32" style="width:92px;height:92px;border-radius:50%;border:3px solid rgba(255,255,255,.2)"><div id="pName" style="margin-top:14px;font-weight:800;font-size:22px;display:flex;align-items:center;gap:6px">ڕێژین <span id="pVer" style="width:18px;height:18px;border-radius:50%;background:#1d9bf0;display:grid;place-items:center;font-size:11px">✓</span></div><div id="pUser" style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px">slat.cc/rezhin</div><div id="pLoc" style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px">📍 هەولێر، کوردستان</div><div id="pBio" style="margin-top:14px;font-size:13px;line-height:1.5;text-align:center;white-space:pre-line;color:rgba(255,255,255,.8)"></div><div id="pBadges" style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center"></div><div id="pDiscord" style="margin-top:16px;width:100%;border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1)"><div style="width:36px;height:36px;border-radius:50%;background:#5865F2;display:grid;place-items:center">💬</div><div><div id="pDUser" style="font-size:12px;font-weight:600">rezhin#0001</div><div style="font-size:11px;color:#aaa">● Online • VSCode</div></div></div><div id="pLinks" style="width:100%;margin-top:18px;display:grid;gap:10px"></div><div id="pAudio" style="width:100%;margin-top:14px"></div><div style="margin-top:auto;padding-top:20px;font-size:11px;color:rgba(255,255,255,.35)">👁️ 12.2k views</div></div></div></div>
+</div>
+<script>
+let links=[{id:'1',icon:'📸',title:'ئینستاگرام',url:'https://instagram.com',enabled:true},{id:'2',icon:'🎵',title:'تیک تۆک',url:'https://tiktok.com',enabled:true},{id:'3',icon:'▶️',title:'یوتیوب',url:'https://youtube.com',enabled:true},{id:'4',icon:'💬',title:'دیسکۆرد',url:'https://discord.gg',enabled:true}];let badges=['Top Creator'];
+function openDrawer(){document.getElementById('drawer').classList.add('open')}function closeDrawer(){document.getElementById('drawer').classList.remove('open')}function go(id){closeDrawer();document.getElementById(id).scrollIntoView({behavior:'smooth'})}function addLink(){links.push({id:Date.now()+'',icon:'🔗',title:'New Link',url:'https://',enabled:true});render()}function addBadge(){let v=document.getElementById('badgeInput').value.trim();if(!v)return;badges.push(v);document.getElementById('badgeInput').value='';render()}function copyLink(){let u=document.getElementById('username').value;navigator.clipboard.writeText('https://slat.cc/'+u);alert('کۆپی کرا: slat.cc/'+u)}
+function renderLinksEditor(){let c=document.getElementById('linksEditor');c.innerHTML='';links.forEach((l,i)=>{let d=document.createElement('div');d.className='glass';d.style.padding='8px';d.style.borderRadius='12px';d.innerHTML=`<div style="display:flex;gap:6px"><input value="${l.icon}" style="width:40px" onchange="links[${i}].icon=this.value;renderPreview()"><input value="${l.title}" onchange="links[${i}].title=this.value;renderPreview()" style="flex:1"><button class="btn" onclick="links.splice(${i},1);render()">🗑️</button></div><input value="${l.url}" style="margin-top:6px" onchange="links[${i}].url=this.value;renderPreview()"><label style="font-size:11px"><input type="checkbox" ${l.enabled?'checked':''} onchange="links[${i}].enabled=this.checked;renderPreview()"> Enabled</label>`;c.appendChild(d);});}
+function renderPreview(){let username=document.getElementById('username').value;let dname=document.getElementById('dname').value;let bio=document.getElementById('bio').value;let loc=document.getElementById('loc').value;let avatar=document.getElementById('avatar').value;let ver=document.getElementById('verified').checked;let neff=document.getElementById('neffect').value;let bgtype=document.getElementById('bgtype').value;let bgcolor=document.getElementById('bgcolor').value;let bgimage=document.getElementById('bgimage').value;let blur=document.getElementById('blur').value;let over=document.getElementById('overlay').value;let radius=document.getElementById('radius').value;let discEn=document.getElementById('discordEn').checked;let dUser=document.getElementById('discordUser').value;let audioUrl=document.getElementById('audioUrl').value;let autoplay=document.getElementById('autoplay').checked;document.getElementById('blurv').innerText=blur;document.getElementById('overv').innerText=over;document.getElementById('radv').innerText=radius;let bg=document.getElementById('bgLayer');if(bgtype==='color')bg.style=`position:absolute;inset:0;background:${bgcolor}`;else if(bgtype==='gradient')bg.style=`position:absolute;inset:0;background:linear-gradient(135deg,${bgcolor},#1e3a8a)`;else if(bgtype==='image')bg.style=`position:absolute;inset:0;background:url('${bgimage}') center/cover no-repeat;filter:blur(${blur/2}px)`;else if(bgtype==='video')bg.innerHTML=`<video src="${bgimage}" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;filter:blur(${blur/2}px)"></video>`;if(bgtype!=='video')bg.innerHTML='';document.getElementById('overlayLayer').style.background=`rgba(0,0,0,${over/100})`;document.getElementById('pAvatar').src=avatar;let nameEl=document.getElementById('pName');nameEl.childNodes[0].textContent=dname+' ';if(neff==='glow')nameEl.style.textShadow=`0 0 20px ${bgcolor},0 0 40px ${bgcolor}`;else if(neff==='rainbow'){nameEl.style.animation='rainbow 3s linear infinite';nameEl.style.textShadow='none'}else if(neff==='glitch'){nameEl.style.animation='glitch.3s infinite';nameEl.style.textShadow='none'}else{nameEl.style.textShadow='none';nameEl.style.animation='none'}document.getElementById('pVer').style.display=ver?'grid':'none';document.getElementById('pUser').innerText='slat.cc/'+username;document.getElementById('pLoc').innerText=loc?'📍 '+loc:'';document.getElementById('pBio').innerText=bio;document.getElementById('pDUser').innerText=dUser;document.getElementById('pDiscord').style.display=discEn?'flex':'none';let bc=document.getElementById('badgeList');bc.innerHTML='';let pb=document.getElementById('pBadges');pb.innerHTML='';badges.forEach((b,i)=>{let s=document.createElement('span');s.textContent=b+' ×';s.style='background:rgba(255,255,255,.1);padding:4px 8px;border-radius:20px;font-size:11px;cursor:pointer';s.onclick=()=>{badges.splice(i,1);render()};bc.appendChild(s);let ps=document.createElement('span');ps.textContent=b;ps.style=`background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1);padding:4px 10px;border-radius:999px;font-size:11px`;pb.appendChild(ps);});let pl=document.getElementById('pLinks');pl.innerHTML='';links.filter(l=>l.enabled).forEach(l=>{let a=document.createElement('a');a.href=l.url;a.target='_blank';a.style=`display:flex;align-items:center;gap:10px;padding:0 16px;height:52px;border-radius:${radius}px;background:rgba(255,255,255,.09);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);color:#fff;text-decoration:none;font-size:13px;font-weight:500;transition:.2s`;a.innerHTML=`<span style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.1);display:grid;place-items:center">${l.icon}</span><span style="flex:1">${l.title}</span><span style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:10px">↗</span>`;a.onmouseenter=()=>a.style.transform='scale(1.02)';a.onmouseleave=()=>a.style.transform='scale(1)';pl.appendChild(a);});let pa=document.getElementById('pAudio');pa.innerHTML='';if(audioUrl){pa.innerHTML=`<audio src="${audioUrl}" controls ${autoplay?'autoplay':''} style="width:100%;height:36px;border-radius:20px"></audio>`}if(document.getElementById('particles').checked)startFx();else stopFx();}
+let fxAnim=null;function startFx(){let c=document.getElementById('fx');let ctx=c.getContext('2d');c.width=360;c.height=680;let vfx=document.getElementById('vfx').value;let particles=[];for(let i=0;i<60;i++)particles.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+0.5,s:Math.random()*1+0.3});function loop(){ctx.clearRect(0,0,c.width,c.height);particles.forEach(p=>{ctx.fillStyle='rgba(255,255,255,'+(0.3+Math.random()*0.4)+')';if(vfx==='snow'){ctx.beginPath();ctx.arc(p.x,p.y,p.r*2,0,Math.PI*2);ctx.fill();p.y+=p.s;p.x+=Math.sin(p.y/50)*0.5;if(p.y>c.height)p.y=0;}else if(vfx==='rain'){ctx.fillRect(p.x,p.y,1,8);p.y+=p.s*4;if(p.y>c.height)p.y=0;}else{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.y-=p.s*0.5;if(p.y<0)p.y=c.height;}});fxAnim=requestAnimationFrame(loop);}cancelAnimationFrame(fxAnim);loop();}function stopFx(){cancelAnimationFrame(fxAnim);let c=document.getElementById('fx');c.getContext('2d').clearRect(0,0,c.width,c.height)}function render(){renderLinksEditor();renderPreview();}window.onload=()=>{renderLinksEditor();renderPreview();}
+</script>
 </body>
 </html>
