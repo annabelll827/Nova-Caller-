@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>feds.lol - Customize</title>
+    <title>guns.lol - Customize</title>
     <style>
         * {
             box-sizing: border-box;
@@ -307,6 +307,32 @@
             background: #27272a;
         }
 
+        /* Custom Input Text Style for Display Name, Jobs, Location */
+        .text-input-wrapper {
+            background: #1e1e24;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .text-input-wrapper input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 13px;
+            width: 100%;
+            outline: none;
+        }
+
+        .text-input-wrapper input::placeholder {
+            color: #71717a;
+        }
+
         /* Custom Sparkle Button Styles */
         button.sparkle-btn {
             --cut: 0.1em;
@@ -600,6 +626,23 @@
 
                 </div>
                 <div class="bg-desc" style="margin-top: 15px;">Pick an image or upgrade to Premium for video backgrounds.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Display Name</div>
+            <div class="text-input-wrapper">
+                <input type="text" placeholder="Enter display name...">
+            </div>
+
+            <div class="card-title" style="margin-top: 15px;">Jobs</div>
+            <div class="text-input-wrapper">
+                <input type="text" placeholder="Enter your job or bio...">
+            </div>
+
+            <div class="card-title" style="margin-top: 15px;">Location</div>
+            <div class="text-input-wrapper">
+                <input type="text" placeholder="Enter your location...">
             </div>
         </div>
     </main>
