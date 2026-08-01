@@ -232,7 +232,6 @@
             position: relative;
         }
 
-        /* تەنها شێوەی چوارگۆشە و بازنە ماوە */
         .avatar-preview.circle {
             border-radius: 50%;
         }
@@ -389,9 +388,11 @@
             
             <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="previewAvatar(this)">
 
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">Change Avatar</button>
-                <button class="btn btn-secondary" onclick="removeAvatar()">Remove Avatar</button>
+            <div class="btn-group" id="btn-group">
+                <button class="btn btn-primary" id="save-btn" style="display: none;" onclick="saveAvatar()">Save Avatar</button>
+                
+                <button class="btn btn-primary" id="change-btn" style="display: none;" onclick="document.getElementById('file-input').click()">Change Avatar</button>
+                <button class="btn btn-secondary" id="remove-btn" style="display: none;" onclick="removeAvatar()">Remove Avatar</button>
             </div>
             
             <div class="card-title" style="margin-top: 20px;">Avatar Shape</div>
@@ -410,18 +411,33 @@
             overlay.classList.toggle('active');
         }
 
+        let tempImageSrc = '';
+
         function previewAvatar(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    tempImageSrc = e.target.result;
                     const img = document.getElementById('avatar-img');
                     const text = document.getElementById('avatar-text');
-                    img.src = e.target.result;
+                    img.src = tempImageSrc;
                     img.style.display = 'block';
                     text.style.display = 'none';
+
+                    // کاتێک وێنە هەڵدەبژێردرێت، دوگمەی Save Avatar دەردەکەوێت
+                    document.getElementById('save-btn').style.display = 'block';
+                    document.getElementById('change-btn').style.display = 'none';
+                    document.getElementById('remove-btn').style.display = 'none';
                 }
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        function saveAvatar() {
+            // کاتێک Save دەکرێت، دوگمەی Save دەڕوات و Change و Remove دەردەکەون
+            document.getElementById('save-btn').style.display = 'none';
+            document.getElementById('change-btn').style.display = 'block';
+            document.getElementById('remove-btn').style.display = 'block';
         }
 
         function removeAvatar() {
@@ -433,6 +449,12 @@
             img.style.display = 'none';
             text.style.display = 'block';
             fileInput.value = '';
+            tempImageSrc = '';
+
+            // بە سڕینەوەی وێنە، هەموو دوگمەکان دەشاردرێنەوە تاوەکو وێنەیەکی نوێ دادەنێیت
+            document.getElementById('save-btn').style.display = 'none';
+            document.getElementById('change-btn').style.display = 'none';
+            document.getElementById('remove-btn').style.display = 'none';
         }
 
         function changeShape(shape, btn) {
