@@ -301,6 +301,38 @@
             background: #27272a;
         }
 
+        /* Background Section Styles */
+        .bg-type-selector {
+            display: flex;
+            background-color: #1e1e24;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 3px;
+            width: fit-content;
+            margin-bottom: 15px;
+        }
+
+        .bg-type-btn {
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .bg-type-btn.active {
+            background-color: #27272a;
+            color: #ffffff;
+        }
+
+        .bg-desc {
+            font-size: 12px;
+            color: #71717a;
+            margin-top: 10px;
+        }
+
         @media(min-width: 1024px) {
             aside {
                 left: 0;
@@ -388,11 +420,9 @@
             
             <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="previewAvatar(this)">
 
-            <div class="btn-group" id="btn-group">
+            <div class="btn-group">
                 <button class="btn btn-primary" id="change-initial-btn" onclick="document.getElementById('file-input').click()">Change Avatar</button>
-                
                 <button class="btn btn-primary" id="save-btn" style="display: none;" onclick="saveAvatar()">Save Avatar</button>
-                
                 <button class="btn btn-primary" id="change-btn" style="display: none;" onclick="document.getElementById('file-input').click()">Change Avatar</button>
                 <button class="btn btn-secondary" id="remove-btn" style="display: none;" onclick="removeAvatar()">Remove Avatar</button>
             </div>
@@ -402,6 +432,26 @@
                 <button class="shape-btn" onclick="changeShape('square', this)">Square</button>
                 <button class="shape-btn active" onclick="changeShape('circle', this)">Circle</button>
             </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Background</div>
+            
+            <div class="bg-type-selector">
+                <button class="bg-type-btn active">Color</button>
+                <button class="bg-type-btn">Media</button>
+            </div>
+
+            <input type="file" id="bg-file-input" accept="image/*" style="display: none;" onchange="previewBg(this)">
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="bg-change-initial-btn" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
+                <button class="btn btn-primary" id="bg-save-btn" style="display: none;" onclick="saveBg()">Save Image</button>
+                <button class="btn btn-primary" id="bg-change-btn" style="display: none;" onclick="document.getElementById('bg-file-input').click()">Change Image</button>
+                <button class="btn btn-secondary" id="bg-remove-btn" style="display: none;" onclick="removeBg()">Remove Image</button>
+            </div>
+
+            <div class="bg-desc">Pick an image or a video background. Color will be removed.</div>
         </div>
     </main>
 
@@ -413,6 +463,7 @@
             overlay.classList.toggle('active');
         }
 
+        // Avatar Functions
         let tempImageSrc = '';
 
         function previewAvatar(input) {
@@ -426,7 +477,6 @@
                     img.style.display = 'block';
                     text.style.display = 'none';
 
-                    // کاتێک وێنە هەڵدەبژێردرێت، دوگمەی سەرەتایی دەشاردرێتەوە و Save Avatar دەردەکەوێت
                     document.getElementById('change-initial-btn').style.display = 'none';
                     document.getElementById('save-btn').style.display = 'block';
                     document.getElementById('change-btn').style.display = 'none';
@@ -437,7 +487,6 @@
         }
 
         function saveAvatar() {
-            // کاتێک Save دەکرێت، Save دەڕوات و Change و Remove دەردەکەون
             document.getElementById('save-btn').style.display = 'none';
             document.getElementById('change-btn').style.display = 'block';
             document.getElementById('remove-btn').style.display = 'block';
@@ -454,7 +503,6 @@
             fileInput.value = '';
             tempImageSrc = '';
 
-            // بە سڕینەوەی وێنە، دەگەڕێتەوە دۆخی سەرەتایی و تەنها Change Avatar دەردەکەوێت
             document.getElementById('change-initial-btn').style.display = 'block';
             document.getElementById('save-btn').style.display = 'none';
             document.getElementById('change-btn').style.display = 'none';
@@ -468,6 +516,32 @@
 
             document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+        }
+
+        // Background Image Functions
+        function previewBg(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('bg-change-initial-btn').style.display = 'none';
+                document.getElementById('bg-save-btn').style.display = 'block';
+                document.getElementById('bg-change-btn').style.display = 'none';
+                document.getElementById('bg-remove-btn').style.display = 'none';
+            }
+        }
+
+        function saveBg() {
+            document.getElementById('bg-save-btn').style.display = 'none';
+            document.getElementById('bg-change-btn').style.display = 'block';
+            document.getElementById('bg-remove-btn').style.display = 'block';
+        }
+
+        function removeBg() {
+            const fileInput = document.getElementById('bg-file-input');
+            fileInput.value = '';
+
+            document.getElementById('bg-change-initial-btn').style.display = 'block';
+            document.getElementById('bg-save-btn').style.display = 'none';
+            document.getElementById('bg-change-btn').style.display = 'none';
+            document.getElementById('bg-remove-btn').style.display = 'none';
         }
     </script>
 
