@@ -129,8 +129,8 @@
         .sign-up-link, .login-link {
             margin-left: 4px;
             text-decoration: underline;
-            text-decoration-color: #6366f1;
-            color: #6366f1;
+            text-decoration-color: teal;
+            color: teal;
             cursor: pointer;
             font-weight: 700;
         }
@@ -676,34 +676,23 @@
         </div>
     </div>
 
-    <!-- Step 3: Sign Up (Sign in) Screen -->
+    <!-- Step 3: Sign Up (Create account) Screen -->
     <div id="signup-screen">
         <div class="box-container">
             <p class="title">Create account</p>
             <form class="form" onsubmit="handleSignupSubmit(event)">
                 <input type="email" class="input" placeholder="E-mail" required>
-                <input type="password" class="input" placeholder="Password" required>
+                <input type="password" id="signup-password" class="input" placeholder="Password" required>
+                <input type="password" id="signup-confirm-password" class="input" placeholder="Confirm Password" required>
                 <button type="submit" class="form-btn" style="background: teal;">Create account</button>
             </form>
             <p class="sign-up-label">
-                Already have an account?<span class="login-link" onclick="showLogin()" style="text-decoration-color: teal; color: teal;">Log in</span>
+                Already have an account?<span class="login-link" onclick="showLogin()">Log in</span>
             </p>
         </div>
     </div>
 
-    <!-- Step 4: Confirm Password Screen -->
-    <div id="verify-screen">
-        <div class="box-container">
-            <p class="title">Confirm Password</p>
-            <p style="font-size: 13px; color: #a1a1aa; text-align: center; margin-bottom: 20px;">Please confirm your password to continue.</p>
-            <form class="form" onsubmit="handleVerifySubmit(event)">
-                <input type="password" class="input" placeholder="Confirm Password" required style="font-size: 14px;">
-                <button type="submit" class="form-btn" style="background: teal;">Confirm & Continue</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Step 5: Main Dashboard App (Hidden Until Login/Verify) -->
+    <!-- Main Dashboard App (Hidden Until Login) -->
     <div id="dashboard-app">
         <div class="dashboard-container">
             <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
@@ -911,13 +900,14 @@
 
         function handleSignupSubmit(event) {
             event.preventDefault();
-            document.getElementById('signup-screen').style.display = 'none';
-            document.getElementById('verify-screen').style.display = 'flex';
-        }
+            const pass = document.getElementById('signup-password').value;
+            const confirmPass = document.getElementById('signup-confirm-password').value;
 
-        function handleVerifySubmit(event) {
-            event.preventDefault();
-            document.getElementById('verify-screen').style.display = 'none';
+            if (pass !== confirmPass) {
+                alert("Passwords do not match!");
+                return;
+            }
+
             finalizeLogin();
         }
 
@@ -925,7 +915,6 @@
             document.getElementById('display-username').innerText = currentUsername;
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('signup-screen').style.display = 'none';
-            document.getElementById('verify-screen').style.display = 'none';
             document.getElementById('dashboard-app').style.display = 'block';
         }
 
