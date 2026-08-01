@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>feds.lol - Claim Username</title>
+    <title>feds.lol - Username, Login & Dashboard</title>
     <style>
         * {
             box-sizing: border-box;
@@ -24,8 +24,66 @@
             overflow: hidden;
         }
 
-        /* Login Screen Overlay */
-        #login-screen {
+        /* Common Box Container Style */
+        .box-container {
+            width: 380px;
+            background-color: #141416;
+            border: 1px solid #222226;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-sizing: border-box;
+            padding: 30px;
+        }
+
+        .title {
+            text-align: center;
+            color: #ffffff;
+            margin: 0 0 25px 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input {
+            border-radius: 12px;
+            border: 1px solid #27272a;
+            background: #1e1e24;
+            color: #ffffff;
+            outline: 0 !important;
+            box-sizing: border-box;
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+
+        .input::placeholder {
+            color: #71717a;
+        }
+
+        .form-btn {
+            padding: 12px 15px;
+            border-radius: 12px;
+            border: 0 !important;
+            outline: 0 !important;
+            background: #6366f1;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .form-btn:hover {
+            background: #4f46e5;
+        }
+
+        /* Username Step Screen */
+        #username-screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -33,72 +91,111 @@
             height: 100%;
             background-color: #0f0f11;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            padding: 20px;
+        }
+
+        /* Login Screen Styles (Uiverse Form) */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f0f11;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             padding: 20px;
         }
 
-        .login-box {
+        .page-link {
+            text-decoration: underline;
+            margin: 0;
+            text-align: end;
+            color: #71717a;
+            text-decoration-color: #71717a;
+        }
+
+        .page-link-label {
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .page-link-label:hover {
+            color: #ffffff;
+        }
+
+        .sign-up-label {
+            margin: 0;
+            font-size: 12px;
+            color: #71717a;
+            text-align: center;
+        }
+
+        .sign-up-link {
+            margin-left: 4px;
+            text-decoration: underline;
+            text-decoration-color: #6366f1;
+            color: #6366f1;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .buttons-container {
             width: 100%;
-            max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            justify-content: flex-start;
+            margin-top: 20px;
+            gap: 12px;
         }
 
-        .login-input-group {
-            display: flex;
-            background: #141416;
-            border: 1px solid #222226;
+        .apple-login-button,
+        .google-login-button {
             border-radius: 12px;
-            overflow: hidden;
-            align-items: center;
-        }
-
-        .login-prefix {
-            background: transparent;
-            color: #a855f7;
-            padding: 14px 16px;
-            font-size: 14px;
-            font-weight: 500;
-            border-right: 1px solid #222226;
-            white-space: nowrap;
-        }
-
-        .login-input-group input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 14px;
-            padding: 14px 16px;
-            width: 100%;
-            outline: none;
-        }
-
-        .login-input-group input::placeholder {
-            color: #71717a;
-        }
-
-        .claim-btn {
-            background: #4f46e5;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
+            box-sizing: border-box;
+            padding: 11px 15px;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 500;
+            gap: 8px;
             transition: 0.2s;
-            width: 100%;
         }
 
-        .claim-btn:hover {
-            background: #4338ca;
+        .apple-login-button {
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #27272a;
         }
 
-        /* Main Dashboard Styles */
+        .apple-login-button:hover {
+            background-color: #111;
+        }
+
+        .google-login-button {
+            background: #1e1e24;
+            color: #fff;
+            border: 1px solid #27272a;
+        }
+
+        .google-login-button:hover {
+            background: #27272a;
+        }
+
+        .apple-icon,
+        .google-icon {
+            font-size: 18px;
+        }
+
+        /* Main Dashboard App (Hidden Until Login) */
         #dashboard-app {
             display: none;
             width: 100%;
@@ -393,7 +490,6 @@
             background: #27272a;
         }
 
-        /* Custom Input Text Style */
         .text-input-wrapper {
             background: #1e1e24;
             border: 1px solid #27272a;
@@ -419,7 +515,6 @@
             color: #71717a;
         }
 
-        /* Custom Sparkle Button Styles */
         button.sparkle-btn {
             --cut: 0.1em;
             --active: 0;
@@ -468,7 +563,6 @@
             opacity: 0;
         }
 
-        /* Locked Premium Button Style */
         button.sparkle-btn.locked {
             background: #1e1e24;
             border-color: #27272a;
@@ -567,16 +661,58 @@
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-box">
-            <div class="login-input-group">
-                <span class="login-prefix">kurds.lol/</span>
-                <input type="text" id="username-input" placeholder="username">
-            </div>
-            <button class="claim-btn" onclick="claimUsername()">Claim Username</button>
+    <!-- Step 1: Username Screen -->
+    <div id="username-screen">
+        <div class="box-container">
+            <p class="title">Claim your link</p>
+            <form class="form" onsubmit="handleUsernameSubmit(event)">
+                <input type="text" id="input-username" class="input" placeholder="Enter username (e.g. zagros)" required>
+                <button type="submit" class="form-btn">Continue</button>
+            </form>
         </div>
     </div>
 
+    <!-- Step 2: Login Screen (Uiverse Form) -->
+    <div id="login-screen">
+        <div class="box-container">
+            <p class="title">Welcome back</p>
+            <form class="form" onsubmit="handleLogin(event)">
+                <input type="email" id="login-email" class="input" placeholder="Email" required>
+                <input type="password" class="input" placeholder="Password" required>
+                <p class="page-link">
+                    <span class="page-link-label">Forgot Password?</span>
+                </p>
+                <button type="submit" class="form-btn">Log in</button>
+            </form>
+            <p class="sign-up-label">
+                Don't have an account?<span class="sign-up-link">Sign up</span>
+            </p>
+            <div class="buttons-container">
+                <div class="apple-login-button" onclick="handleLoginDirect()">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" class="apple-icon" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M747.4 535.7c-.4-68.2 30.5-119.6 92.9-157.5-34.9-50-87.7-77.5-157.3-82.8-65.9-5.2-138 38.4-164.4 38.4-27.9 0-91.7-36.6-141.9-36.6C273.1 298.8 163 379.8 163 544.6c0 48.7 8.9 99 26.7 150.8 23.8 68.2 109.6 235.3 199.1 232.6 46.8-1.1 79.9-33.2 140.8-33.2 59.1 0 89.7 33.2 141.9 33.2 90.3-1.3 167.9-153.2 190.5-221.6-121.1-57.1-114.6-167.2-114.6-170.7zm-105.1-305c50.7-60.2 46.1-115 44.6-134.7-44.8 2.6-96.6 30.5-126.1 64.8-32.5 36.8-51.6 82.3-47.5 133.6 48.4 3.7 92.6-21.2 129-63.7z"></path>
+                    </svg>
+                    <span>Log in with Apple</span>
+                </div>
+                <div class="google-login-button" onclick="handleLoginDirect()">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" x="0px" y="0px" class="google-icon" viewBox="0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12
+                        c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24
+                        c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657
+                        C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36
+                        c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571
+                        c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                    </svg>
+                    <span>Log in with Google</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: Main Dashboard App (Hidden Until Login) -->
     <div id="dashboard-app">
         <div class="dashboard-container">
             <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
@@ -640,6 +776,7 @@
                     <span class="tab">Tracks</span>
                 </div>
 
+                <!-- Avatar Card Section -->
                 <div class="card">
                     <div class="card-title">Avatar</div>
                     
@@ -672,6 +809,7 @@
                     </div>
                 </div>
 
+                <!-- Background Card Section -->
                 <div class="card">
                     <div class="card-title">Background</div>
                     
@@ -680,6 +818,7 @@
                         <button class="bg-type-btn" onclick="switchBgTab('media', this)">Media</button>
                     </div>
 
+                    <!-- Color Section -->
                     <div class="bg-content-section active" id="bg-color-section">
                         <div class="color-picker-wrapper">
                             <input type="color" id="bgColorPicker" value="#0f0f11">
@@ -688,9 +827,9 @@
                         <div class="bg-desc">Sets a solid background color.</div>
                     </div>
 
+                    <!-- Media Section -->
                     <div class="bg-content-section" id="bg-media-section">
                         <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                            
                             <div>
                                 <div class="card-title" style="margin-bottom: 8px;">Image Background</div>
                                 <input type="file" id="bg-image-input" accept="image/*" style="display: none;" onchange="previewBgImage(this)">
@@ -721,12 +860,12 @@
                                     </button>
                                 </div>
                             </div>
-
                         </div>
                         <div class="bg-desc" style="margin-top: 15px;">Pick an image or upgrade to Premium for video backgrounds.</div>
                     </div>
                 </div>
 
+                <!-- Profile Info Fields Card -->
                 <div class="card">
                     <div class="card-title">Display Name</div>
                     <div class="text-input-wrapper">
@@ -748,16 +887,29 @@
     </div>
 
     <script>
-        function claimUsername() {
-            const inputVal = document.getElementById('username-input').value.trim();
-            if(inputVal === "") {
-                alert("Please enter a username first!");
-                return;
+        let currentUsername = "";
+
+        function handleUsernameSubmit(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('input-username').value.trim();
+            if(usernameInput) {
+                currentUsername = usernameInput.includes('.') ? usernameInput : usernameInput + ".gg";
+                document.getElementById('username-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
             }
-            // Update username in the sidebar profile box
-            document.getElementById('display-username').innerText = inputVal;
-            
-            // Hide login screen and show dashboard app
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            finalizeLogin();
+        }
+
+        function handleLoginDirect() {
+            finalizeLogin();
+        }
+
+        function finalizeLogin() {
+            document.getElementById('display-username').innerText = currentUsername;
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('dashboard-app').style.display = 'block';
         }
@@ -779,7 +931,6 @@
             }, 600);
         }
 
-        // Avatar Functions
         function previewAvatar(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -832,7 +983,6 @@
             btn.classList.add('active');
         }
 
-        // Background Tab Switcher (Color / Media)
         function switchBgTab(type, btn) {
             document.querySelectorAll('.bg-type-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -846,7 +996,6 @@
             }
         }
 
-        // Background Image Functions
         function previewBgImage(input) {
             if (input.files && input.files[0]) {
                 document.getElementById('bg-img-initial-btn').style.display = 'none';
