@@ -812,7 +812,7 @@
 
     <script>
         let currentUsername = "";
-        // خەزنکردنی ئەکاونتە تۆمارکراوەکان لە localStorage بۆ ئەوەی دڵنیا بین هەر ئیمێڵێک تەنها یەک ئەکاونتی هەبێت
+
         function getRegisteredUsers() {
             let users = localStorage.getItem('krd_users');
             return users ? JSON.parse(users) : {};
@@ -871,14 +871,12 @@
 
             let users = getRegisteredUsers();
 
-            // پشکنین بۆ ئەوەی دڵنیا بین ئیمێڵەکە پێشتر تۆمار نەکراوە
             if (users[email]) {
                 alert("An account with this email already exists! Please log in.");
                 showLogin();
                 return;
             }
 
-            // خەزنکردنی ئیمێڵ و وشەی تێپەڕ نوێ
             users[email] = pass;
             localStorage.setItem('krd_users', JSON.stringify(users));
 
