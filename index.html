@@ -32,13 +32,13 @@
             position: fixed;
             height: 100%;
             top: 0;
-            left: -260px; /* بە شێوەی سەرەتایی شاراوەیە لە موبایلدا */
+            left: -260px;
             transition: 0.3s ease-in-out;
             z-index: 1000;
         }
 
         aside.active {
-            left: 0; /* کاتێک کارا دەبێت دەردەکەوێت */
+            left: 0;
         }
 
         .logo-area {
@@ -50,7 +50,6 @@
             justify-content: space-between;
         }
 
-        /* Close Button inside sidebar for mobile */
         .close-btn {
             background: none;
             border: none;
@@ -130,7 +129,6 @@
             gap: 15px;
         }
 
-        /* Hamburger Menu Button (سێ خەتەکە) */
         .hamburger {
             background: none;
             border: none;
@@ -170,7 +168,6 @@
             background: #27272a;
         }
 
-        /* Overlay background when menu is open */
         .overlay {
             position: fixed;
             top: 0;
@@ -186,7 +183,6 @@
             display: block;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 15px;
@@ -209,7 +205,6 @@
             color: #ffffff;
         }
 
-        /* Card Section */
         .card {
             background-color: #141416;
             border: 1px solid #222226;
@@ -237,20 +232,13 @@
             position: relative;
         }
 
+        /* تەنها شێوەی چوارگۆشە و بازنە ماوە */
         .avatar-preview.circle {
             border-radius: 50%;
         }
 
         .avatar-preview.square {
             border-radius: 0;
-        }
-
-        .avatar-preview.soft {
-            border-radius: 12px;
-        }
-
-        .avatar-preview.rounded {
-            border-radius: 20px;
         }
 
         .avatar-preview img {
@@ -330,10 +318,8 @@
 </head>
 <body>
 
-    <!-- Overlay بۆ تاریککردنی پشتەوە کاتێک مینیو دەکرێتەوە -->
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-    <!-- Sidebar (مینیوی لای چەپ) -->
     <aside id="sidebar">
         <div>
             <div class="logo-area">
@@ -371,11 +357,9 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main>
         <div class="header">
             <div class="header-left">
-                <!-- دوگمەی سێ خەت (Hamburger Menu) -->
                 <button class="hamburger" onclick="toggleMenu()">
                     <span></span>
                     <span></span>
@@ -395,17 +379,14 @@
             <span class="tab">Tracks</span>
         </div>
 
-        <!-- Avatar Card Section -->
         <div class="card">
             <div class="card-title">Avatar</div>
             
-            <!-- بۆکسی وێنە کە بە کلیک کردن فایلی وێنە دەكاتەوە -->
             <div class="avatar-preview circle" id="avatar-box" onclick="document.getElementById('file-input').click()">
                 <img id="avatar-img" src="" alt="Avatar">
                 <span id="avatar-text">Drag & drop or click to upload</span>
             </div>
             
-            <!-- فایلی شاردراوە بۆ وەرگرتنی وێنە -->
             <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="previewAvatar(this)">
 
             <div class="btn-group">
@@ -416,14 +397,11 @@
             <div class="card-title" style="margin-top: 20px;">Avatar Shape</div>
             <div class="shape-options">
                 <button class="shape-btn" onclick="changeShape('square', this)">Square</button>
-                <button class="shape-btn" onclick="changeShape('soft', this)">Soft</button>
-                <button class="shape-btn" onclick="changeShape('rounded', this)">Rounded</button>
                 <button class="shape-btn active" onclick="changeShape('circle', this)">Circle</button>
             </div>
         </div>
     </main>
 
-    <!-- JavaScript بۆ کارکردنی مینیو و وێنە -->
     <script>
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
@@ -432,7 +410,6 @@
             overlay.classList.toggle('active');
         }
 
-        // دانانی وێنە
         function previewAvatar(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -447,7 +424,6 @@
             }
         }
 
-        // سڕینەوەی وێنە
         function removeAvatar() {
             const img = document.getElementById('avatar-img');
             const text = document.getElementById('avatar-text');
@@ -459,10 +435,9 @@
             fileInput.value = '';
         }
 
-        // گۆڕینی شێوەی ئەڤەتارەکە
         function changeShape(shape, btn) {
             const box = document.getElementById('avatar-box');
-            box.classList.remove('square', 'soft', 'rounded', 'circle');
+            box.classList.remove('square', 'circle');
             box.classList.add(shape);
 
             document.querySelectorAll('.shape-btn').forEach(b => b.classList.remove('active'));
